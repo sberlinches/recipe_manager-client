@@ -1,0 +1,34 @@
+<div>
+  <header>
+    <h2>Create recipe</h2>
+  </header>
+
+  <form #newRecipeForm="ngForm" (ngSubmit)="onSubmit(newRecipeForm)">
+    <div>
+      <label for="name">Name</label>
+      <input type="text"
+             id="name"
+             name="name"
+             [ngModel]="recipe.getName()"
+             (ngModelChange)="recipe.setName($event)"
+             minlength="2"
+             maxlength="30"
+             required>
+    </div>
+    <div>
+      <label for="estimatedTime">Estimated time</label>
+      <input type="number"
+             id="estimatedTime"
+             name="estimatedTime"
+             [ngModel]="recipe.getEstimatedTime()"
+             (ngModelChange)="recipe.setName($event)"
+             required>
+    </div>
+    <div>
+      <button type="submit"
+              [disabled]="!newRecipeForm.valid">Submit</button>
+      <!--<button type="button"
+              (click)="cancel()">Cancel</button>-->
+    </div>
+  </form>
+</div>

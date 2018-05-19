@@ -1,0 +1,32 @@
+<article>
+  <div class="article-header">
+    <h2>Assignment 2: Recipe view, add and edit user interface</h2>
+  </div>
+
+  <div class="article-main">
+    <button (click)="newRecipe()">New recipe</button>
+
+    <ul>
+      <li *ngFor="let recipe of recipes; let i = index" [attr.data-index]="i">
+        {{ recipe.getName() }} (ETA: {{ recipe.getEstimatedTime() }})
+        <button (click)="showDetails()">Show details</button>
+        <button (click)="editRecipe()">Edit</button>
+        <button (click)="deleteRecipe(i)">Delete</button>
+        <ul>
+          <li>Ingredients:
+            <ul *ngFor="let ingredient of recipe.getIngredients()">
+              <li>{{ ingredient.getName() }} x{{ ingredient.getQuantity() }}</li>
+            </ul>
+          </li>
+          <li>Instructions:
+            <ul *ngFor="let instruction of recipe.getInstructions()">
+              <li>{{ instruction }}</li>
+            </ul>
+          </li>
+        </ul>
+    </ul>
+
+    <app-recipe-new></app-recipe-new>
+  </div>
+</article>
+
