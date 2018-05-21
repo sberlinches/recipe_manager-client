@@ -1,28 +1,29 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { RecipeService } from "../recipe.service";
 import { Recipe } from "../../a1/recipe.class";
-import {Item} from "../../a1/item.class";
+import { Item } from "../../a1/item.class";
 
 @Component({
-  selector: 'app-recipe-new',
-  templateUrl: '../views/recipe-new.component.html',
+  selector: 'app-recipe-edit',
+  templateUrl: '../views/recipe-edit.component.html',
   styleUrls: ['../assets/recipe.component.css']
 })
-export class RecipeNewComponent implements OnInit {
+export class RecipeEditComponent implements OnInit {
 
+  @Input() index: number;
   @Output() closeModal = new EventEmitter();
   public recipe: Recipe;
 
   constructor(
     private recipeService: RecipeService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.recipe = new Recipe('',[],[],0);
+    this.recipe = this.recipeService.getRecipe(this.index);
   }
 
   /**
-   * Adds an item to the recipe
+   * Adds an item to the ingredient list
    * @param name The name of the item
    * @param quantity The amount of the item
    */
@@ -66,16 +67,12 @@ export class RecipeNewComponent implements OnInit {
   }
 
   /**
-   *
+   * Submits the form
    * @param form
    */
-  onSubmit(form) {
-    console.log(form);
-    console.log(this.recipe);
-    if(form.valid) {
-      this.recipeService.newRecipe(this.recipe);
-      this.closeModal.emit();
-    }
+  public onSubmit(form) {
+    if(form.valid)
+      this.recipeService.editRecipe(this.index, this.recipe);
   }
 
   /**
@@ -83,5 +80,32 @@ export class RecipeNewComponent implements OnInit {
    */
   public cancel() {
     this.closeModal.emit();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /**
+   *
+   * @param {number} index
+   * @param {Recipe} recipe
+   * @returns {any}
+   */
+  public trackRecipe(index: number, recipe: Recipe): number {
+    return index;
   }
 }

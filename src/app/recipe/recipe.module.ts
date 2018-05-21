@@ -5,11 +5,13 @@ import { FormsModule } from '@angular/forms';
 //Components
 import { RecipeComponent } from './components/recipe.component';
 import { RecipeNewComponent } from './components/recipe-new.component';
+import { RecipeEditComponent } from './components/recipe-edit.component';
 
 @NgModule({
   declarations: [
     RecipeComponent,
-    RecipeNewComponent
+    RecipeNewComponent,
+    RecipeEditComponent
   ],
   imports: [
     CommonModule,

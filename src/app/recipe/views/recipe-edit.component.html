@@ -1,7 +1,7 @@
 <div class="modal">
   <div class="modal-container">
     <header class="modal-header">
-      <h2 class="pull-left">New recipe</h2>
+      <h2 class="pull-left">Edit recipe</h2>
       <button class="pull-right" type="button" title="Cancel" (click)="cancel()">×</button>
     </header>
 
@@ -58,7 +58,7 @@
 
       <div>
         <label>Instructions:</label>
-        <span *ngFor="let instruction of recipe.getInstructions(); let i = index;">
+        <span *ngFor="let instruction of recipe.getInstructions(); let i = index; trackBy: trackRecipe;">
           <textarea name="instruction_{{i}}"
                     [(ngModel)]="recipe.getInstructions()[i]"
                     required>{{ instruction }}
@@ -76,8 +76,6 @@
       <div class="align-right">
         <button type="button"
                 (click)="cancel()">Cancel</button>
-        <button type="submit"
-                [disabled]="!editRecipeForm.valid">Submit</button>
       </div>
     </form>
   </div>

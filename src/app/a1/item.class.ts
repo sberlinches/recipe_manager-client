@@ -30,6 +30,14 @@ export class Item {
   }
 
   /**
+   *
+   * @param {string} name
+   */
+  public setName(name: string): void {
+    this.name = name;
+  }
+
+  /**
    * Sets the amount of the item.
    * @param {number} quantity The amount of the item
    */

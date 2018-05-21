@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { RecipeService } from "../recipe.service";
 import { Recipe } from "../../a1/recipe.class";
 
@@ -11,30 +10,39 @@ import { Recipe } from "../../a1/recipe.class";
 export class RecipeComponent implements OnInit {
 
   public recipes: Recipe[];
+  public selected: number;
+  public index: number;
+  public showRecipeEditComponent: boolean;
+  public showRecipeNewComponent: boolean;
 
   constructor(
     private recipeService: RecipeService
-  ) { }
+  ) {
+    this.showRecipeEditComponent = false;
+    this.showRecipeNewComponent = false;
+  }
 
   public ngOnInit() {
     this.getRecipes();
   }
 
-  /**
-   *
-   */
   private getRecipes(): void {
     this.recipes = this.recipeService.getRecipes();
   }
 
-  public showDetails(): void {}
-  public newRecipe(): void {}
-  public editRecipe(): void {}
+  public showDetails(index: number): void {
+    this.selected = (this.selected == index)? null: index;
+  }
 
-  /**
-   * Deletes a recipe
-   * @param index The index of the recipe
-   */
+  public newRecipe(): void {
+    this.showRecipeNewComponent = true;
+  }
+
+  public editRecipe(index: number): void {
+    this.index = index;
+    this.showRecipeEditComponent = true;
+  }
+
   public deleteRecipe(index): void {
     this.recipeService.deleteRecipe(index);
   }

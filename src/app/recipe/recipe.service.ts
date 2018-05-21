@@ -19,6 +19,15 @@ export class RecipeService {
   }
 
   /**
+   * Gets a recipe
+   * @param {number} index The index of the recipe in the array
+   * @returns {Recipe}
+   */
+  public getRecipe(index: number): Recipe {
+    return RECIPES[index];
+  }
+
+  /**
    * Creates a new recipe
    * @param {Recipe} recipe
    */
@@ -27,8 +36,17 @@ export class RecipeService {
   }
 
   /**
+   * Edits a recipe
+   * @param {number} index The index of the recipe in the array
+   * @param {Recipe} recipe
+   */
+  public editRecipe(index: number, recipe: Recipe): void {
+    RECIPES[index] = recipe;
+  }
+
+  /**
    * Deletes a recipe
-   * @param {number} index The index of the recipe
+   * @param {number} index The index of the recipe in the array
    */
   public deleteRecipe(index: number): void {
     RECIPES.splice(index, index+1);

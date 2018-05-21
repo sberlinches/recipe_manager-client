@@ -4,7 +4,7 @@ export class Recipe {
 
   private name: string;
   private ingredients: Item[];
-  private instructions: string[];
+  public instructions: string[];
   private estimatedTime: number;
 
   /**
@@ -93,11 +93,20 @@ export class Recipe {
     this.ingredients.push(item);
   }
 
+  public removeItem(key: number): void {
+    console.log(key);
+    this.ingredients.splice(Number(key), Number(key)+1);
+  }
+
   /**
    * Adds an instruction to the recipe.
    * @param {string} instruction The step for the recipe
    */
   public addInstruction(instruction: string): void {
     this.instructions.push(instruction);
+  }
+
+  public removeInstruction(key: number): void {
+    this.instructions.splice(Number(key), Number(key)+1);
   }
 }
