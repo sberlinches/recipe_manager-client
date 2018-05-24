@@ -1,8 +1,4 @@
 <article>
-  <div class="article-header">
-    <h2>Assignment 2: Recipe view, add and edit user interface</h2>
-  </div>
-
   <app-recipe-new *ngIf="showRecipeNewComponent"
                   (closeModal)="showRecipeNewComponent = false"></app-recipe-new>
   <app-recipe-edit *ngIf="showRecipeEditComponent"
