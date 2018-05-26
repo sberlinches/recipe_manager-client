@@ -11,20 +11,20 @@
         <tr>
           <th class="fit"></th>
           <th>Recipe</th>
-          <th class="fixed300"><button (click)="newRecipe()">New recipe</button></th>
+          <th class="fixed300"><button id="recipe_new_button" (click)="newRecipe()">New recipe</button></th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let recipe of recipes; let i = index;">
+        <tr id="recipe-{{i}}" *ngFor="let recipe of recipes; let i = index;">
           <td>
-            <button type="button" (click)="showDetails(i)">
+            <button id="recipe_details_button-{{i}}" type="button" (click)="showDetails(i)">
               <span *ngIf="selected != i">></span>
               <span *ngIf="selected == i">v</span>
             </button>
           </td>
           <td>
             <h3>{{ recipe.getName() }}</h3>
-            <div *ngIf="selected == i">
+            <div id="recipe_details-{{i}}" *ngIf="selected == i">
               <p>Ingredients:</p>
               <ul><li *ngFor="let ingredient of recipe.getIngredients()">
                   {{ ingredient.getName() }} x{{ ingredient.getQuantity() }}
@@ -36,8 +36,8 @@
             </div>
           </td>
           <td>
-            <button type="button" (click)="editRecipe(i)">Edit</button>
-            <button type="button" (click)="deleteRecipe(i)">Delete</button>
+            <button id="recipe_edit_button-{{0}}" type="button" (click)="editRecipe(i)">Edit</button>
+            <button id="recipe_delete_button-{{0}}" type="button" (click)="deleteRecipe(i)">Delete</button>
           </td>
         </tr>
       </tbody>
