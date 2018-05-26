@@ -82,23 +82,6 @@ export class RecipeEditComponent implements OnInit {
     this.closeModal.emit();
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   /**
    *
    * @param {number} index
