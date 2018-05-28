@@ -70,8 +70,6 @@ export class RecipeNewComponent implements OnInit {
    * @param form
    */
   onSubmit(form) {
-    console.log(form);
-    console.log(this.recipe);
     if(form.valid) {
       this.recipeService.newRecipe(this.recipe);
       this.closeModal.emit();

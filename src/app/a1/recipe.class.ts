@@ -94,7 +94,6 @@ export class Recipe {
   }
 
   public removeItem(key: number): void {
-    console.log(key);
     this.ingredients.splice(Number(key), Number(key)+1);
   }
 
