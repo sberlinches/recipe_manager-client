@@ -5,6 +5,7 @@ import { RecipeNewComponent } from "./recipe-new.component";
 import { RecipeEditComponent } from "./recipe-edit.component";
 
 describe('RecipeComponent', () => {
+
   let component: RecipeComponent;
   let fixture: ComponentFixture<RecipeComponent>;
 
