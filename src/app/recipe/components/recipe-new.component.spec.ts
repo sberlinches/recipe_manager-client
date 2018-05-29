@@ -61,15 +61,15 @@ describe('RecipeNewComponent', () => {
     // "textContent" doesn't show the content from the input...
     //expect(ingredientDisplay.textContent).toBe('Tomato');
     //expect(quantityDisplay.textContent).toBe('1');
-    expect(hostElement.querySelector('#ingredient-0')).not.toBe(null);
-    expect(hostElement.querySelector('#quantity-0')).not.toBe(null);
+    expect(hostElement.querySelector('#ingredient_name-0')).not.toBe(null);
+    expect(hostElement.querySelector('#ingredient_quantity-0')).not.toBe(null);
 
     hostElement.querySelector("#remove_ingredient_button-0")
       .dispatchEvent(new Event("click"));
     fixture.detectChanges();
 
-    expect(hostElement.querySelector('#ingredient-0')).toBe(null);
-    expect(hostElement.querySelector('#quantity-0')).toBe(null);
+    expect(hostElement.querySelector('#ingredient_name-0')).toBe(null);
+    expect(hostElement.querySelector('#ingredient_quantity-0')).toBe(null);
   });
 
   /**

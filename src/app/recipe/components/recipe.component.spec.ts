@@ -45,14 +45,14 @@ describe('RecipeComponent', () => {
    */
   it('Show details', () => {
 
-    const elem: HTMLElement = fixture.debugElement.nativeElement;
+    const hostElement = fixture.nativeElement;
 
-    elem.querySelector("#recipe_details_button-0")
+    hostElement.querySelector("#recipe_details_button-0")
       .dispatchEvent(new Event("click"));
 
     fixture.detectChanges();
 
-    expect(elem.querySelector("#recipe_details-0")).not.toBe(null);
+    expect(hostElement.querySelector("#recipe_details-0")).not.toBe(null);
   });
 
   /**
@@ -62,14 +62,38 @@ describe('RecipeComponent', () => {
    */
   it('Show new recipe component', () => {
 
-    const elem: HTMLElement = fixture.debugElement.nativeElement;
+    const hostElement = fixture.nativeElement;
 
-    elem.querySelector("#recipe_new_button")
+    hostElement.querySelector("#recipe_new_button")
       .dispatchEvent(new Event("click"));
 
     fixture.detectChanges();
 
-    expect(elem.querySelector("#recipe_new")).not.toBe(null);
+    expect(hostElement.querySelector("#recipe_new")).not.toBe(null);
+  });
+
+  /**
+   * Add recipe
+   */
+  it('Add recipe', () => {
+
+    const hostElement = fixture.nativeElement;
+
+    hostElement.querySelector("#recipe_new_button")
+      .dispatchEvent(new Event("click"));
+
+    fixture.detectChanges();
+
+    const recipeNameInput: HTMLInputElement = hostElement.querySelector('#recipe_name');
+    recipeNameInput.value = 'Test';
+
+    recipeNameInput.dispatchEvent(new Event('input'));
+    hostElement.querySelector("#new_recipe_form")
+      .dispatchEvent(new Event("submit"));
+
+    fixture.detectChanges();
+
+    expect(hostElement.querySelector("#recipe-1")).not.toBe(null);
   });
 
   /**
@@ -79,14 +103,37 @@ describe('RecipeComponent', () => {
    */
   it('Show edit recipe component', () => {
 
-    const elem: HTMLElement = fixture.debugElement.nativeElement;
+    const hostElement = fixture.nativeElement;
 
-    elem.querySelector("#recipe_edit_button-0")
+    hostElement.querySelector("#recipe_edit_button-1")
       .dispatchEvent(new Event("click"));
 
     fixture.detectChanges();
 
-    expect(elem.querySelector("#recipe_edit-0")).not.toBe(null);
+    expect(hostElement.querySelector("#recipe_edit-1")).not.toBe(null);
+  });
+
+  /**
+   * Edit recipe
+   */
+  it('Edit recipe', () => {
+
+    const hostElement = fixture.nativeElement;
+
+    hostElement.querySelector("#recipe_edit_button-1")
+      .dispatchEvent(new Event("click"));
+
+    fixture.detectChanges();
+
+    const recipeNameInput: HTMLInputElement = hostElement.querySelector('#recipe_name');
+    recipeNameInput.value = 'Test';
+
+    recipeNameInput.dispatchEvent(new Event('input'));
+
+    fixture.detectChanges();
+
+    console.log(hostElement.querySelector("#recipe-1 h3"));
+    //expect(hostElement.querySelector("#recipe-1 h3").textContent).toBe("test");
   });
 
   /**
@@ -96,13 +143,15 @@ describe('RecipeComponent', () => {
    */
   it('Delete recipe', () => {
 
-    const elem: HTMLElement = fixture.debugElement.nativeElement;
+    const hostElement = fixture.nativeElement;
 
-    elem.querySelector("#recipe_delete_button-0")
+    hostElement.querySelector("#recipe_delete_button-1")
       .dispatchEvent(new Event("click"));
 
     fixture.detectChanges();
 
-    expect(elem.querySelector("#recipe-0")).toBe(null);
+    expect(hostElement.querySelector("#recipe-1")).toBe(null);
   });
+
+
 });
