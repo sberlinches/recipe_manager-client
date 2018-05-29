@@ -67,15 +67,6 @@ export class RecipeEditComponent implements OnInit {
   }
 
   /**
-   * Submits the form
-   * @param form
-   */
-  public onSubmit(form) {
-    if(form.valid)
-      this.recipeService.editRecipe(this.index, this.recipe);
-  }
-
-  /**
    * Closes the modal
    */
   public cancel() {
