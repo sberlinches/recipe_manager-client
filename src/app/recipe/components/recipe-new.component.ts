@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { RecipeService } from "../recipe.service";
-import { Recipe } from "../../a1/recipe.class";
-import { Item } from "../../a1/item.class";
+import { Recipe } from "../recipe.class";
+import { Item } from "../../item/item.class";
 
 @Component({
   selector: 'app-recipe-new',

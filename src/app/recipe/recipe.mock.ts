@@ -1,5 +1,5 @@
-import { Recipe } from 'src/app/a1/recipe.class';
-import { Item } from "src/app/a1/item.class";
+import { Recipe } from './recipe.class';
+import { Item } from "../item/item.class";
 
 export const RECIPES: Recipe[] = [
   new Recipe(

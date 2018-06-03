@@ -1,5 +1,5 @@
-import { Item } from "./item.class";
-import { Recipe } from "./recipe.class";
+import { Item } from "../item/item.class";
+import { Recipe } from "../recipe/recipe.class";
 
 export class Fridge {
 

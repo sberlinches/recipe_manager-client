@@ -120,19 +120,25 @@ describe('RecipeComponent', () => {
 
     const hostElement = fixture.nativeElement;
 
-    hostElement.querySelector("#recipe_edit_button-1")
-      .dispatchEvent(new Event("click"));
-
+    hostElement.querySelector("#recipe_edit_button-0").dispatchEvent(new Event("click"));
     fixture.detectChanges();
 
     const recipeNameInput: HTMLInputElement = hostElement.querySelector('#recipe_name');
     recipeNameInput.value = 'Test';
+    console.log("real", recipeNameInput.value);
 
-    recipeNameInput.dispatchEvent(new Event('input'));
-
+    recipeNameInput.dispatchEvent(new Event("input"));
     fixture.detectChanges();
 
-    console.log(hostElement.querySelector("#recipe-1 h3"));
+    //console.log(hostElement.querySelector("#recipe-1 h3"));
+    let wewe: HTMLElement = hostElement.querySelector("#recipe-0 h3");
+
+    console.log(document.getElementById("recipe-0"));
+
+
+
+    console.log("innerText", wewe.innerText);
+    console.log("textContent", wewe.textContent);
     //expect(hostElement.querySelector("#recipe-1 h3").textContent).toBe("test");
   });
 

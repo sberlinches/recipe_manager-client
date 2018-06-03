@@ -1,4 +1,4 @@
-import { Item } from "./item.class";
+import { Item } from "../item/item.class";
 
 export class Recipe {
 
