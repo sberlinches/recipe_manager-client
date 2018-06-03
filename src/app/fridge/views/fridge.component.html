@@ -2,16 +2,27 @@
   <div class="article-main">
     <table>
       <thead>
-      <tr>
-        <th>Fridge</th>
-      </tr>
+        <tr>
+          <th class="fit">
+            <button type="button" (click)="showContent()">
+              <span *ngIf="!_showContent">></span>
+              <span *ngIf="_showContent">v</span>
+            </button>
+          </th>
+          <th colspan="2"><h2>My fridge ({{ _fridge.getContents().length }})</h2></th>
+        </tr>
       </thead>
-      <tbody>
-      <tr id="recipe-{{i}}" *ngFor="let content of fridge.getContents(); let i = index;">
-        <td>
-          <h3>{{ content.getName() }} x{{ content.getQuantity() }}</h3>
-        </td>
-      </tr>
+      <tbody *ngIf="_showContent">
+        <tr>
+          <th></th>
+          <th>Ingredients</th>
+          <th>Quantity</th>
+        </tr>
+        <tr *ngFor="let content of _fridge.getContents();">
+          <td></td>
+          <td><h3>{{ content.getName() }}</h3></td>
+          <td>{{ content.getQuantity() }}</td>
+        </tr>
       </tbody>
     </table>
   </div>

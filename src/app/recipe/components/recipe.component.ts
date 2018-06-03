@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RecipeService } from "../recipe.service";
-import { Recipe } from "../recipe.class";
+import { Recipe } from "../recipe";
 
 @Component({
   selector: 'app-recipe',
@@ -10,6 +10,7 @@ import { Recipe } from "../recipe.class";
 export class RecipeComponent implements OnInit {
 
   public recipes: Recipe[];
+  public _showContent: boolean;
   public selected: number;
   public index: number;
   public showRecipeEditComponent: boolean;
@@ -18,6 +19,7 @@ export class RecipeComponent implements OnInit {
   constructor(
     private recipeService: RecipeService
   ) {
+    this._showContent = false;
     this.showRecipeEditComponent = false;
     this.showRecipeNewComponent = false;
   }
@@ -28,6 +30,10 @@ export class RecipeComponent implements OnInit {
 
   private getRecipes(): void {
     this.recipes = this.recipeService.getRecipes();
+  }
+
+  public showContent() {
+    this._showContent = (!this._showContent);
   }
 
   public showDetails(index: number): void {

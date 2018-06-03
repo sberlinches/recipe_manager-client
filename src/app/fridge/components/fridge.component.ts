@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FridgeService } from "../fridge.service";
-import { Fridge } from "../fridge.class";
+import { Fridge } from "../fridge";
 
 @Component({
   selector: 'app-fridge',
@@ -9,20 +9,31 @@ import { Fridge } from "../fridge.class";
 })
 export class FridgeComponent implements OnInit {
 
-  public fridge: Fridge;
+  public _fridge: Fridge;
+  public _showContent: boolean;
 
   constructor(
     private fridgeService: FridgeService
-  ) { }
+  ) {
+    this._showContent = false;
+  }
 
   ngOnInit() {
     this.getFridge()
   }
 
   /**
-   * Get the fridge contents
+   * Gets the fridge contents
    */
   private getFridge() {
-    this.fridge = this.fridgeService.getFridge();
+    this._fridge = this.fridgeService.getFridge();
+    console.log(this._fridge.getContents().length);
+  }
+
+  /**
+   * Shows the fridge content
+   */
+  public showContent(): void {
+    this._showContent = (!this._showContent);
   }
 }

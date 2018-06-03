@@ -1,4 +1,4 @@
-import { Recipe } from './recipe.class';
+import { Recipe } from './recipe';
 import { Item } from "../item/item.class";
 
 export const RECIPES: Recipe[] = [

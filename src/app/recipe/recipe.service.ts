@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Recipe } from './recipe.class';
+import { Recipe } from './recipe';
 import { RECIPES } from './recipe.mock';
 
 @Injectable({

@@ -1,0 +1,30 @@
+<article>
+  <div class="article-main">
+    <table>
+      <thead>
+      <tr>
+        <th class="fit">
+          <button type="button" (click)="showContent()">
+            <span *ngIf="!_showContent">></span>
+            <span *ngIf="_showContent">v</span>
+          </button>
+        </th>
+        <th colspan="2"><h2>My shopping list ({{ _shoppingList.length }})</h2></th>
+      </tr>
+      </thead>
+      <tbody *ngIf="_showContent">
+      <tr>
+        <th></th>
+        <th>Ingredients</th>
+        <th>Quantity</th>
+      </tr>
+      <tr *ngFor="let content of _shoppingList;">
+        <td></td>
+        <td><h3>{{ content.item.getName() }}</h3></td>
+        <td>{{ content.item.getQuantity() }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</article>
+

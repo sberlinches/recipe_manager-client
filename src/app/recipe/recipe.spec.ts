@@ -1,5 +1,5 @@
 import { Item } from "../item/item.class";
-import { Recipe } from "./recipe.class"
+import { Recipe } from "./recipe"
 
 describe("Recipe class", function() {
 
