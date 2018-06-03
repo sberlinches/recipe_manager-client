@@ -27,7 +27,6 @@ export class FridgeComponent implements OnInit {
    */
   private getFridge() {
     this._fridge = this.fridgeService.getFridge();
-    console.log(this._fridge.getContents().length);
   }
 
   /**
