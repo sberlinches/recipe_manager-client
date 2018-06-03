@@ -1,0 +1,41 @@
+<article>
+  <div class="article-main">
+    <table>
+      <thead>
+      <tr>
+        <!--<th class="fit"></th>-->
+        <th>Fridge</th>
+        <!--<th class="fixed300"><button id="recipe_new_button" (click)="newRecipe()">New recipe</button></th>-->
+      </tr>
+      </thead>
+      <tbody>
+      <tr id="recipe-{{i}}" *ngFor="let content of fridge.getContents(); let i = index;">
+        <!--<td>
+          <button id="recipe_details_button-{{i}}" type="button" (click)="showDetails(i)">
+            <span *ngIf="selected != i">></span>
+            <span *ngIf="selected == i">v</span>
+          </button>
+        </td>-->
+        <td>
+          <h3>{{ content.getName() }} x{{ content.getQuantity() }}</h3>
+          <!--<div id="recipe_details-{{i}}" *ngIf="selected == i">
+            <p>Ingredients:</p>
+            <ul><li *ngFor="let ingredient of recipe.getIngredients()">
+              {{ ingredient.getName() }} x{{ ingredient.getQuantity() }}
+            </li></ul>
+            <p>Instructions:</p>
+            <ul><li *ngFor="let instruction of recipe.getInstructions()">
+              {{ instruction }}
+            </li></ul>
+          </div>-->
+        </td>
+        <!--<td>
+          <button id="recipe_edit_button-{{i}}" type="button" (click)="editRecipe(i)">Edit</button>
+          <button id="recipe_delete_button-{{i}}" type="button" (click)="deleteRecipe(i)">Delete</button>
+        </td>-->
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</article>
+

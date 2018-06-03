@@ -1,6 +1,6 @@
-import { Item } from "./item.class";
+import { Item } from "../item/item.class";
 import { Fridge } from "./fridge.class";
-import {Recipe} from "./recipe.class";
+import { Recipe } from "../recipe/recipe.class";
 
 describe("Fridge class", function() {
 
