@@ -25,5 +25,4 @@ export class FridgeComponent implements OnInit {
   private getFridge() {
     this.fridge = this.fridgeService.getFridge();
   }
-
 }
