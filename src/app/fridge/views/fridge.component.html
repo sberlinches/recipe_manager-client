@@ -1,4 +1,7 @@
 <article>
+
+  <app-fridge-add *ngIf="_showFridgeAddComponent" (closeModal)="_showFridgeAddComponent = false"></app-fridge-add>
+
   <div class="article-main">
     <table>
       <thead>
@@ -9,7 +12,10 @@
               <span *ngIf="_showContent">v</span>
             </button>
           </th>
-          <th colspan="2"><h2>My fridge ({{ _fridge.getItems().length }})</h2></th>
+          <th colspan="3">
+            <h2>My fridge ({{ _fridge.getItems().length }})</h2>
+            <button class="pull-right" id="add_item_button" title="Add item" (click)="addItem()">+</button>
+          </th>
         </tr>
       </thead>
       <tbody *ngIf="_showContent">
@@ -18,10 +24,13 @@
           <th>Ingredients</th>
           <th>Quantity</th>
         </tr>
-        <tr *ngFor="let content of _fridge.getItems();">
+        <tr *ngFor="let content of _fridge.getItems(); let i = index">
           <td></td>
           <td><h3>{{ content.getName() }}</h3></td>
-          <td>{{ content.getQuantity() }}</td>
+          <td>
+            {{ content.getQuantity() }}
+            <button class="pull-right" id="remove_item_button-{{i}}" title="Remove item" (click)="removeItem(i)">-</button>
+          </td>
         </tr>
       </tbody>
     </table>

@@ -13,11 +13,20 @@ export class Fridge {
   }
 
   /**
-   * Returns the contents of the fridge.
+   * Returns the items of the fridge.
    * @returns {Item[]} The contents of the fridge.
    */
   public getItems(): Item[] {
     return this.items;
+  }
+
+  /**
+   * Returns an item from the fridge.
+   * @param {number} index
+   * @returns {Item}
+   */
+  public getItem(index: number): Item {
+    return this.items[index];
   }
 
   /**

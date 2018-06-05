@@ -1,0 +1,39 @@
+<div class="modal">
+  <div id="add_item" class="modal-container">
+    <header class="modal-header">
+      <h2 class="pull-left">Add item</h2>
+      <button id="close_modal_button" class="pull-right" type="button" title="Cancel" (click)="cancel()">×</button>
+    </header>
+
+    <form id="add_item_form" class="modal-body" #addItemForm="ngForm" (ngSubmit)="onSubmit(addItemForm)">
+      <div>
+        <label for="item_name">Name:</label>
+        <input type="text"
+               id="item_name"
+               name="item_name"
+               [ngModel]="item.getName()"
+               (ngModelChange)="item.setName($event)"
+               minlength="2"
+               maxlength="30"
+               required>
+      </div>
+
+      <div>
+        <label for="item_quantity">Quantity:</label>
+        <input type="number"
+               id="item_quantity"
+               name="item_quantity"
+               [ngModel]="item.getQuantity()"
+               (ngModelChange)="item.setQuantity($event)"
+               required>
+      </div>
+
+      <div class="align-right">
+        <button type="button"
+                (click)="cancel()">Cancel</button>
+        <button type="submit"
+                [disabled]="!addItemForm.valid">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
