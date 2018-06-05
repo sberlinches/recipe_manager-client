@@ -7,17 +7,21 @@ import { Recipe } from "../recipe";
 @Component({
   selector: 'app-recipe',
   templateUrl: '../views/recipe.component.html',
-  styleUrls: ['../assets/recipe.component.css']
+  styleUrls: ['../assets/recipe.component.css'],
+  providers: [
+    FridgeService,
+    ShoppingListService
+  ]
 })
 export class RecipeComponent implements OnInit {
 
-  private recipes: Recipe[];
-  private _showContent: boolean;
-  private selected: number;
-  private index: number;
-  private showRecipeEditComponent: boolean;
-  private showRecipeNewComponent: boolean;
-  private _prepareRecipe: number[];
+  public recipes: Recipe[];
+  public _showContent: boolean;
+  public selected: number;
+  public index: number;
+  public showRecipeEditComponent: boolean;
+  public showRecipeNewComponent: boolean;
+  public _prepareRecipe: number[];
 
   constructor(
     private _recipeService: RecipeService,

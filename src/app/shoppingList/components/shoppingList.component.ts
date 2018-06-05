@@ -8,8 +8,8 @@ import { ShoppingList } from "../shoppingList";
 })
 export class ShoppingListComponent implements OnInit {
 
-  private _shoppingList: ShoppingList;
-  private _showContent: boolean;
+  public _shoppingList: ShoppingList;
+  public _showContent: boolean;
 
   constructor(
     private shoppingListService: ShoppingListService

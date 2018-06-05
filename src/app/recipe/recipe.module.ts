@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RecipeService } from "./recipe.service";
 import { RecipeComponent } from './components/recipe.component';
 import { RecipeNewComponent } from './components/recipe-new.component';
 import { RecipeEditComponent } from './components/recipe-edit.component';
@@ -19,7 +20,9 @@ import { RecipeEditComponent } from './components/recipe-edit.component';
   exports: [
     RecipeComponent
   ],
-  providers: []
+  providers: [
+    RecipeService
+  ]
 })
 
 export class RecipeModule {}

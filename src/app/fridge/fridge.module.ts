@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FridgeService } from "./fridge.service";
 import { FridgeComponent } from "./components/fridge.component";
 
 @NgModule({
@@ -13,7 +14,9 @@ import { FridgeComponent } from "./components/fridge.component";
   exports: [
     FridgeComponent
   ],
-  providers: []
+  providers: [
+    FridgeService
+  ]
 })
 
 export class FridgeModule {}
