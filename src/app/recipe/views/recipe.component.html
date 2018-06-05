@@ -16,8 +16,10 @@
               <span *ngIf="_showContent">v</span>
             </button>
           </th>
-          <th><h2>My recipes ({{ recipes.length }})</h2></th>
-          <th class="fixed300"><button id="recipe_new_button" (click)="newRecipe()">New recipe</button></th>
+          <th>
+            <h2>My recipes ({{ recipes.length }})</h2>
+            <button class="pull-right" id="recipe_new_button" title="New recipe" (click)="newRecipe()">+</button>
+          </th>
         </tr>
       </thead>
 
@@ -30,43 +32,26 @@
             </button>
           </td>
           <td>
+
             <h3>{{ recipe.getName() }}</h3>
-            <div id="recipe_details-{{i}}" *ngIf="selected == i">
 
-              <table>
-                <thead>
-                  <tr>
-                    <th><h4>Ingredients</h4></th>
-                    <th>Quantity</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let ingredient of recipe.getIngredients()">
-                    <td>{{ ingredient.getName() }}</td>
-                    <td>{{ ingredient.getQuantity() }}</td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <table>
-                <thead>
-                <tr>
-                  <th><h4>Instructions</h4></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let instruction of recipe.getInstructions()">
-                  <td>{{ instruction }}</td>
-                </tr>
-                </tbody>
-              </table>
-
+            <div class="pull-right">
+              <button id="recipe_prepare_button-{{i}}" type="button" (click)="prepareRecipe(i)" >Prepare recipe <span *ngIf="_prepareRecipe[i]">×{{ _prepareRecipe[i] }}</span></button>
+              <button id="recipe_edit_button-{{i}}" type="button" (click)="editRecipe(i)">Edit</button>
+              <button id="recipe_delete_button-{{i}}" type="button" (click)="deleteRecipe(i)">Delete</button>
             </div>
-          </td>
-          <td>
-            <button id="recipe_prepare_button-{{i}}" type="button" (click)="prepareRecipe(i)" >Prepare recipe <span *ngIf="_prepareRecipe[i]">×{{ _prepareRecipe[i] }}</span></button>
-            <button id="recipe_edit_button-{{i}}" type="button" (click)="editRecipe(i)">Edit</button>
-            <button id="recipe_delete_button-{{i}}" type="button" (click)="deleteRecipe(i)">Delete</button>
+
+            <div id="recipe_details-{{i}}" *ngIf="selected == i">
+              <p>Ingredients:</p>
+              <ul>
+                <li *ngFor="let ingredient of recipe.getIngredients()">{{ ingredient.getName() }} ×{{ ingredient.getQuantity() }}</li>
+              </ul>
+              <p>Instructions:</p>
+              <ul>
+                <li *ngFor="let instruction of recipe.getInstructions()">{{ instruction }}</li>
+              </ul>
+            </div>
+
           </td>
         </tr>
       </tbody>

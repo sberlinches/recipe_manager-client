@@ -48,7 +48,7 @@
                  required>
           <button id="remove_ingredient_button-{{i}}"
                   title="Remove ingredient"
-                  (click)="deleteIngredient(i)">×</button>
+                  (click)="deleteIngredient(i)">-</button>
         </span>
         <span>
           <input id="ingredient_name" class="a2" #ingredientName type="text">
@@ -71,7 +71,7 @@
           <button id="remove_instruction_button-{{i}}"
                   type="button"
                   title="Remove step"
-                  (click)="deleteInstruction(i)">×</button>
+                  (click)="deleteInstruction(i)">-</button>
         </span>
         <span>
           <textarea id="instruction" #instruction></textarea>
