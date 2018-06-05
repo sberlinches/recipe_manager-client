@@ -1,3 +1,3 @@
-import { ShoppingList } from './shoppingList';
+import { ShoppingList } from "./shoppingList";
 
-export const SHOPPINGLIST: ShoppingList[] = [];
+export const SHOPPINGLIST: ShoppingList = new ShoppingList();

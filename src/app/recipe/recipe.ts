@@ -1,10 +1,12 @@
-import { Item } from "../item/item.class";
+import { Item } from "../item/item";
+import {Fridge} from "../fridge/fridge";
+import {ShoppingList} from "../shoppingList/shoppingList";
 
 export class Recipe {
 
   private name: string;
   private ingredients: Item[];
-  public instructions: string[];
+  private instructions: string[];
   private estimatedTime: number;
 
   /**
@@ -93,6 +95,10 @@ export class Recipe {
     this.ingredients.push(item);
   }
 
+  /**
+   *
+   * @param {number} key
+   */
   public removeItem(key: number): void {
     this.ingredients.splice(Number(key), Number(key)+1);
   }
@@ -105,7 +111,50 @@ export class Recipe {
     this.instructions.push(instruction);
   }
 
+  /**
+   *
+   * @param {number} key
+   */
   public removeInstruction(key: number): void {
     this.instructions.splice(Number(key), Number(key)+1);
+  }
+
+  /**
+   * Gets the items from the fridge and take note of the items that need to be
+   * bought.
+   * @param {Fridge} fridge
+   * @param {ShoppingList} shoppingList
+   */
+  public prepareRecipe(fridge: Fridge, shoppingList: ShoppingList): void {
+
+    for (let ingredient of this.ingredients) {
+
+      let isInFridge = false;
+      let newItem = new Item(ingredient.getName(), ingredient.getQuantity());
+
+      for (let fridgeItem of fridge.getItems()) {
+
+        // If the item is in the fridge...
+        if (ingredient.getName() == fridgeItem.getName()) {
+
+          isInFridge = true;
+
+          // If there's not enough in the fridge
+          if (ingredient.getQuantity() > fridgeItem.getQuantity()) {
+            newItem.subtract(fridgeItem);
+            shoppingList.addItem(newItem);
+          }
+
+          break;
+        }
+      }
+
+      // If the item is not in the fridge, add it to the shopping list
+      if(!isInFridge)
+        shoppingList.addItem(newItem);
+
+      // Subtract or removes
+      fridge.removeItem(ingredient);
+    }
   }
 }

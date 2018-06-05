@@ -8,8 +8,8 @@ import { ShoppingList } from "../shoppingList";
 })
 export class ShoppingListComponent implements OnInit {
 
-  public _shoppingList: ShoppingList[];
-  public _showContent: boolean;
+  private _shoppingList: ShoppingList;
+  private _showContent: boolean;
 
   constructor(
     private shoppingListService: ShoppingListService
@@ -19,11 +19,11 @@ export class ShoppingListComponent implements OnInit {
     this.getShoppingList();
   }
 
-  public getShoppingList() {
+  private getShoppingList() {
     this._shoppingList = this.shoppingListService.getShoppingList();
   }
 
-  public showContent(): void {
+  private showContent(): void {
     this._showContent = (!this._showContent);
   }
 }

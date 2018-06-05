@@ -47,9 +47,6 @@ describe('RecipeComponent', () => {
 
     const hostElement = fixture.nativeElement;
 
-    hostElement.querySelector("#recipe_content_button").dispatchEvent(new Event("click"));
-    fixture.detectChanges();
-
     hostElement.querySelector("#recipe_details_button-0").dispatchEvent(new Event("click"));
     fixture.detectChanges();
 
@@ -87,7 +84,6 @@ describe('RecipeComponent', () => {
 
     recipeNameInput.dispatchEvent(new Event('input'));
     hostElement.querySelector("#new_recipe_form").dispatchEvent(new Event("submit"));
-    hostElement.querySelector("#recipe_content_button").dispatchEvent(new Event("click"));
     fixture.detectChanges();
 
     expect(hostElement.querySelector("#recipe-1")).not.toBe(null);
@@ -102,9 +98,6 @@ describe('RecipeComponent', () => {
 
     const hostElement = fixture.nativeElement;
 
-    hostElement.querySelector("#recipe_content_button").dispatchEvent(new Event("click"));
-    fixture.detectChanges();
-
     hostElement.querySelector("#recipe_edit_button-1").dispatchEvent(new Event("click"));
     fixture.detectChanges();
 
@@ -118,25 +111,15 @@ describe('RecipeComponent', () => {
 
     const hostElement = fixture.nativeElement;
 
-    hostElement.querySelector("#recipe_content_button").dispatchEvent(new Event("click"));
-    fixture.detectChanges();
-
     hostElement.querySelector("#recipe_edit_button-0").dispatchEvent(new Event("click"));
     fixture.detectChanges();
 
     const recipeNameInput: HTMLInputElement = hostElement.querySelector('#recipe_name');
     recipeNameInput.value = 'Test';
-    console.log("real", recipeNameInput.value);
 
     recipeNameInput.dispatchEvent(new Event("input"));
     fixture.detectChanges();
 
-    let wewe: HTMLElement = hostElement.querySelector("#recipe-0 h3");
-
-    console.log(document.getElementById("recipe-0"));
-
-    console.log("innerText", wewe.innerText);
-    console.log("textContent", wewe.textContent);
     //expect(hostElement.querySelector("#recipe-1 h3").textContent).toBe("test");
   });
 
@@ -149,14 +132,9 @@ describe('RecipeComponent', () => {
 
     const hostElement = fixture.nativeElement;
 
-    hostElement.querySelector("#recipe_content_button").dispatchEvent(new Event("click"));
-    fixture.detectChanges();
-
     hostElement.querySelector("#recipe_delete_button-1").dispatchEvent(new Event("click"));
     fixture.detectChanges();
 
     expect(hostElement.querySelector("#recipe-1")).toBe(null);
   });
-
-
 });

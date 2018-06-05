@@ -9,7 +9,7 @@
               <span *ngIf="_showContent">v</span>
             </button>
           </th>
-          <th colspan="2"><h2>My fridge ({{ _fridge.getContents().length }})</h2></th>
+          <th colspan="2"><h2>My fridge ({{ _fridge.getItems().length }})</h2></th>
         </tr>
       </thead>
       <tbody *ngIf="_showContent">
@@ -18,7 +18,7 @@
           <th>Ingredients</th>
           <th>Quantity</th>
         </tr>
-        <tr *ngFor="let content of _fridge.getContents();">
+        <tr *ngFor="let content of _fridge.getItems();">
           <td></td>
           <td><h3>{{ content.getName() }}</h3></td>
           <td>{{ content.getQuantity() }}</td>

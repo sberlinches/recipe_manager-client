@@ -36,15 +36,11 @@ button {
   font-weight: bold;
 }
 
-button[disabled] {
-  background-color: #565962;
-}
-
 button[type=submit] {
   background: #00aa06;
 }
 
-button[type=submit][disabled] {
+button[disabled] {
   background-color: rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.1);
 }

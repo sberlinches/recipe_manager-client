@@ -64,6 +64,7 @@
             </div>
           </td>
           <td>
+            <button id="recipe_prepare_button-{{i}}" type="button" (click)="prepareRecipe(i)" >Prepare recipe <span *ngIf="_prepareRecipe[i]">×{{ _prepareRecipe[i] }}</span></button>
             <button id="recipe_edit_button-{{i}}" type="button" (click)="editRecipe(i)">Edit</button>
             <button id="recipe_delete_button-{{i}}" type="button" (click)="deleteRecipe(i)">Delete</button>
           </td>

@@ -1,7 +1,7 @@
 export class Item {
 
   private name: string;
-  public quantity: number;
+  private quantity: number;
 
   /**
    * Creates a new item object.

@@ -1,5 +1,5 @@
 import { Recipe } from './recipe';
-import { Item } from "../item/item.class";
+import { Item } from "../item/item";
 
 export const RECIPES: Recipe[] = [
   new Recipe(
@@ -16,5 +16,5 @@ export const RECIPES: Recipe[] = [
       'Bake for 14-16 minutes'
     ],
     60
-    ),
+    )
 ];

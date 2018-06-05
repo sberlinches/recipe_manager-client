@@ -1,93 +1,96 @@
-import { Item } from "../item/item.class";
+import { Item } from "../item/item";
 import { Recipe } from "../recipe/recipe";
 
 export class Fridge {
 
-  private contents: Item[];
+  private items: Item[];
 
   /**
    * Creates an empty fridge
    */
   constructor() {
-    this.contents = [];
+    this.items = [];
   }
 
   /**
    * Returns the contents of the fridge.
    * @returns {Item[]} The contents of the fridge.
    */
-  public getContents(): Item[] {
-    return this.contents;
+  public getItems(): Item[] {
+    return this.items;
   }
 
   /**
-   * Adds the specified amount of an item to the fridge.
-   * If a similar item already exists, add to it's quantity if it does not, add
-   * the item.
-   * @param {Item} item
+   * Adds an item to the shopping list. If the item exists updates the quantity.
+   * @param {Item} item The item to be added
    */
-  public add(item: Item): void {
+  public addItem(item: Item): void {
 
-    // If the item exists, add the quantity
-    for (let content of this.contents) {
-      if(item.getName() == content.getName()) {
-        content.add(item);
+    for (let fridgeItem of this.items) {
+      if(item.getName() == fridgeItem.getName()) {
+        // If the item exists, add the quantity
+        fridgeItem.add(item);
         return;
       }
     }
 
-    this.contents.push(item);
+    this.items.push(item);
   }
 
   /**
-   * Remove the specified amount of the item from the fridge, if the amount
-   * falls below zero, remove the item completely
-   * from the fridge.
-   * @param {Item} item
+   * Removes the specified amount of the item from the fridge, if the amount
+   * falls below zero, removes the item completely from the fridge.
+   * @param {Item} item The item to be removed
    */
-  public remove(item: Item): void {
+  public removeItem(item: Item): void {
 
-    for (let key in this.contents) {
+    for (let key in this.items) {
 
-      let content = this.contents[Number(key)];
+      let fridgeItem = this.items[Number(key)];
 
-      if(item.getName() == content.getName()) {
-        content.subtract(item);
-        if(content.getQuantity() <= 0)
-          this.contents.splice(Number(key), Number(key)+1);
+      if(item.getName() == fridgeItem.getName()) {
+        // Subtract the item from the fridge
+        fridgeItem.subtract(item);
+        // If the quantity reach zero, remove the item from the list
+        if(fridgeItem.getQuantity() <= 0) {
+          this.items.splice(Number(key), 1);
+          return;
+        }
       }
     }
   }
 
   /**
-   * Give a recipe, check what ingredient are already in the fridge. This method
+   * Given a recipe, check what ingredient are already in the fridge. This method
    * returns a two list. A shopping list, on what needs to be bought, and a list
    * of what is already in the fridge. Note if an item can be on both list, if
    * there is not enough of it in a fridge.
+   * @param {Recipe} recipe
+   * @returns {{[p: string]: Item[]}}
    */
-  public checkRecipe(recipe: Recipe): any {
+  public checkRecipe(recipe: Recipe): {[name: string]: Item[]} {
 
-    let list: { [listName: string]: Item[]; } = {
-      'shoppingList': [],
-      'fridgeList': []
+    let list: { [name: string]: Item[]; } = {
+      shopping: [],
+      fridge: []
     };
 
     for (let recipeItem of recipe.getIngredients()) {
 
       let isInFridge = false;
 
-      for (let fridgeItem of this.contents) {
+      for (let fridgeItem of this.items) {
 
         // If the item is in the fridge...
         if (recipeItem.getName() == fridgeItem.getName()) {
 
           // ... and there's not enough quantity, add it to both lists
           if (recipeItem.getQuantity() > fridgeItem.getQuantity()) {
-            list.fridgeList.push(fridgeItem);
-            list.shoppingList.push(new Item(recipeItem.getName(), recipeItem.getQuantity()- fridgeItem.getQuantity()));
+            list.fridge.push(fridgeItem);
+            list.shopping.push(new Item(recipeItem.getName(), recipeItem.getQuantity()- fridgeItem.getQuantity()));
           }
           // ...and there's enough quantity, add it to the "fridge list"
-          else list.fridgeList.push(fridgeItem);
+          else list.fridge.push(fridgeItem);
 
           isInFridge = true;
           break;
@@ -95,7 +98,7 @@ export class Fridge {
       }
 
       // If the item is not in the fridge, add it to the "shopping list"
-      if(!isInFridge) list.shoppingList.push(recipeItem);
+      if(!isInFridge) list.shopping.push(recipeItem);
     }
 
     return list;

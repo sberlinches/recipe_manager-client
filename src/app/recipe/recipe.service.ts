@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Recipe } from './recipe';
 import { RECIPES } from './recipe.mock';
+import { Recipe } from './recipe';
+import {Fridge} from "../fridge/fridge";
+import {ShoppingList} from "../shoppingList/shoppingList";
 
 @Injectable({
   providedIn: 'root'
@@ -10,15 +12,15 @@ export class RecipeService {
   constructor() { }
 
   /**
-   * Gets all recipes
-   * @returns {Recipe[]}
+   * Gets the recipes.
+   * @returns {Recipe[]} The recipe object
    */
   public getRecipes(): Recipe[] {
     return RECIPES;
   }
 
   /**
-   * Gets a recipe
+   * Gets a recipe.
    * @param {number} index The index of the recipe in the array
    * @returns {Recipe}
    */
@@ -27,7 +29,7 @@ export class RecipeService {
   }
 
   /**
-   * Creates a new recipe
+   * Creates a new recipe.
    * @param {Recipe} recipe
    */
   public newRecipe(recipe: Recipe): void {
@@ -35,7 +37,7 @@ export class RecipeService {
   }
 
   /**
-   * Edits a recipe
+   * Edits a recipe.
    * @param {number} index The index of the recipe in the array
    * @param {Recipe} recipe
    */
@@ -44,10 +46,21 @@ export class RecipeService {
   }
 
   /**
-   * Deletes a recipe
+   * Deletes a recipe.
    * @param {number} index The index of the recipe in the array
    */
   public deleteRecipe(index: number): void {
     RECIPES.splice(index, index+1);
+  }
+
+  /**
+   * Gets the items from the fridge. If there's not item or enough quantity in
+   * the fridge it will take note in a shopping list.
+   * @param {Recipe} recipe
+   * @param {Fridge} fridge
+   * @param {ShoppingList} shoppingList
+   */
+  public prepareRecipe(recipe: Recipe, fridge: Fridge, shoppingList: ShoppingList): void {
+    recipe.prepareRecipe(fridge, shoppingList);
   }
 }

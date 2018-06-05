@@ -1,4 +1,4 @@
-import { Item } from "../item/item.class";
+import { Item } from "../item/item";
 import { Recipe } from "./recipe"
 
 describe("Recipe class", function() {

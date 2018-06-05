@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RecipeService } from "../recipe.service";
+import { FridgeService } from "../../fridge/fridge.service";
+import { ShoppingListService } from "../../shoppingList/shoppingList.service";
 import { Recipe } from "../recipe";
 
 @Component({
@@ -9,19 +11,23 @@ import { Recipe } from "../recipe";
 })
 export class RecipeComponent implements OnInit {
 
-  public recipes: Recipe[];
-  public _showContent: boolean;
-  public selected: number;
-  public index: number;
-  public showRecipeEditComponent: boolean;
-  public showRecipeNewComponent: boolean;
+  private recipes: Recipe[];
+  private _showContent: boolean;
+  private selected: number;
+  private index: number;
+  private showRecipeEditComponent: boolean;
+  private showRecipeNewComponent: boolean;
+  private _prepareRecipe: number[];
 
   constructor(
-    private recipeService: RecipeService
+    private _recipeService: RecipeService,
+    private _fridgeService: FridgeService,
+    private _shoppingListService: ShoppingListService,
   ) {
-    this._showContent = false;
+    this._showContent = true;
     this.showRecipeEditComponent = false;
     this.showRecipeNewComponent = false;
+    this._prepareRecipe = [];
   }
 
   public ngOnInit() {
@@ -29,7 +35,7 @@ export class RecipeComponent implements OnInit {
   }
 
   private getRecipes(): void {
-    this.recipes = this.recipeService.getRecipes();
+    this.recipes = this._recipeService.getRecipes();
   }
 
   public showContent() {
@@ -50,6 +56,19 @@ export class RecipeComponent implements OnInit {
   }
 
   public deleteRecipe(index): void {
-    this.recipeService.deleteRecipe(index);
+    this._recipeService.deleteRecipe(index);
+  }
+
+  public prepareRecipe(index): void {
+    this._recipeService.prepareRecipe(
+      this._recipeService.getRecipe(index),
+      this._fridgeService.getFridge(),
+      this._shoppingListService.getShoppingList()
+    );
+
+    if(this._prepareRecipe[index])
+      this._prepareRecipe[index]++;
+    else
+      this._prepareRecipe[index] = 1;
   }
 }
