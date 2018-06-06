@@ -9,19 +9,21 @@
             <span *ngIf="_showContent">v</span>
           </button>
         </th>
-        <th colspan="2"><h2>My shopping list ({{ _shoppingList.getItems().length }})</h2></th>
+        <th colspan="3"><h2>My shopping list ({{ _shoppingList.getShoppingListItems().length }})</h2></th>
       </tr>
       </thead>
       <tbody *ngIf="_showContent">
       <tr>
         <th></th>
         <th>Ingredients</th>
-        <th>Quantity</th>
+        <th>In basket</th>
+        <th>In fridge</th>
       </tr>
-      <tr *ngFor="let item of _shoppingList.getItems();">
+      <tr *ngFor="let item of _shoppingList.getShoppingListItems()">
         <td></td>
         <td><h3>{{ item.getName() }}</h3></td>
         <td>{{ item.getQuantity() }}</td>
+        <td>{{ _shoppingList.getFridgeItemQuantityByItem(item) }}</td>
       </tr>
       </tbody>
     </table>

@@ -54,13 +54,11 @@ export class RecipeService {
   }
 
   /**
-   * Gets the items from the fridge. If there's not item or enough quantity in
-   * the fridge it will take note in a shopping list.
+   *
    * @param {Recipe} recipe
-   * @param {Fridge} fridge
    * @param {ShoppingList} shoppingList
    */
-  public prepareRecipe(recipe: Recipe, fridge: Fridge, shoppingList: ShoppingList): void {
-    recipe.prepareRecipe(fridge, shoppingList);
+  public prepareRecipe(recipe: Recipe, shoppingList: ShoppingList): void {
+    recipe.prepareRecipe(shoppingList);
   }
 }

@@ -16,5 +16,15 @@ export const RECIPES: Recipe[] = [
       'Bake for 14-16 minutes'
     ],
     60
-    )
+    ),
+  new Recipe(
+    'Mierda',
+    [
+      new Item('Mierda', 100)
+    ],
+    [
+      'Put everything together'
+    ],
+    1
+  )
 ];

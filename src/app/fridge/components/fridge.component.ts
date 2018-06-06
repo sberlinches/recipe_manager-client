@@ -16,7 +16,7 @@ export class FridgeComponent implements OnInit {
   constructor(
     private _fridgeService: FridgeService
   ) {
-    this._showContent = false;
+    this._showContent = true;
     this._showFridgeAddComponent = false;
   }
 
@@ -36,8 +36,11 @@ export class FridgeComponent implements OnInit {
     this._showFridgeAddComponent = true;
   }
 
-  public removeItem(index: number): void {
-    let item = this._fridgeService.getItem(index);
-    this._fridgeService.removeItem(item);
+  public addToItem(index: number): void {
+    this._fridgeService.addXToItem(index, 1);
+  }
+
+  public subtractFromItem(index: number): void {
+    this._fridgeService.subtractXFromItem(index, 1);
   }
 }

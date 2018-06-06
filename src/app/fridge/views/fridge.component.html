@@ -29,7 +29,8 @@
           <td><h3>{{ content.getName() }}</h3></td>
           <td>
             {{ content.getQuantity() }}
-            <button class="pull-right" id="remove_item_button-{{i}}" title="Remove item" (click)="removeItem(i)">-</button>
+            <button class="pull-right" id="subtract_item_button-{{i}}" title="Subtract from item" (click)="subtractFromItem(i)">-</button>
+            <button class="pull-right" id="add_item_button-{{i}}" title="Add to item" (click)="addToItem(i)">+</button>
           </td>
         </tr>
       </tbody>

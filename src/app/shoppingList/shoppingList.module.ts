@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ShoppingListService } from "./shoppingList.service";
 import { ShoppingListComponent } from "./components/shoppingList.component";
+import { FridgeService } from "../fridge/fridge.service";
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ShoppingListComponent } from "./components/shoppingList.component";
     ShoppingListComponent
   ],
   providers: [
-    ShoppingListService
+    ShoppingListService,
+    FridgeService
   ]
 })
 

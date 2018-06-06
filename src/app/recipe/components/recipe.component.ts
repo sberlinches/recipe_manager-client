@@ -66,10 +66,10 @@ export class RecipeComponent implements OnInit {
   public prepareRecipe(index): void {
     this._recipeService.prepareRecipe(
       this._recipeService.getRecipe(index),
-      this._fridgeService.getFridge(),
       this._shoppingListService.getShoppingList()
     );
 
+    // Increment the count
     if(this._prepareRecipe[index])
       this._prepareRecipe[index]++;
     else

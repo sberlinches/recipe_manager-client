@@ -21,6 +21,14 @@ export class ShoppingListService {
    * @param {Item} item The item to be added
    */
   public addItem(item: Item): void {
-    SHOPPINGLIST.addItem(item);
+    SHOPPINGLIST.addShoppingListItems(item);
+  }
+
+  public addFridgeListItem(item: Item): void {
+    SHOPPINGLIST.addFridgeListItem(item);
+  }
+
+  public getFridgeItemQuantityByItem(item: Item): number {
+    return SHOPPINGLIST.getFridgeItemQuantityByItem(item);
   }
 }

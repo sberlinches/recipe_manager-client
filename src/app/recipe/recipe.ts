@@ -122,39 +122,37 @@ export class Recipe {
   /**
    * Gets the items from the fridge and take note of the items that need to be
    * bought.
-   * @param {Fridge} fridge
    * @param {ShoppingList} shoppingList
    */
-  public prepareRecipe(fridge: Fridge, shoppingList: ShoppingList): void {
+  public prepareRecipe(shoppingList: ShoppingList): void {
 
-    for (let ingredient of this.ingredients) {
+    for (let recipeItem of this.ingredients) {
 
       let isInFridge = false;
-      let newItem = new Item(ingredient.getName(), ingredient.getQuantity());
 
-      for (let fridgeItem of fridge.getItems()) {
-
-        // If the item is in the fridge...
-        if (ingredient.getName() == fridgeItem.getName()) {
+      for (let fridgeItem of shoppingList.getFridgeListItems()) {
+        if(recipeItem.getName() == fridgeItem.getName()) {
 
           isInFridge = true;
 
-          // If there's not enough in the fridge
-          if (ingredient.getQuantity() > fridgeItem.getQuantity()) {
-            newItem.subtract(fridgeItem);
-            shoppingList.addItem(newItem);
-          }
+          // If the quantity in the recipe is bigger, add to the shopping list
+          // the difference
+          if(recipeItem.getQuantity() > fridgeItem.getQuantity())
+            shoppingList.addShoppingListItems(new Item(recipeItem.getName(), recipeItem.getQuantity() - fridgeItem.getQuantity()));
 
           break;
         }
       }
 
-      // If the item is not in the fridge, add it to the shopping list
-      if(!isInFridge)
-        shoppingList.addItem(newItem);
+      // If the item is in the fridge
+      if(isInFridge)
+        shoppingList.addShoppingListItems(new Item(recipeItem.getName(), 0));
+      // If the item is not in the fridge
+      else
+        shoppingList.addShoppingListItems(new Item(recipeItem.getName(), recipeItem.getQuantity()));
 
       // Subtract or removes
-      fridge.removeItem(ingredient);
+      shoppingList.removeFridgeListItem(recipeItem);
     }
   }
 }
