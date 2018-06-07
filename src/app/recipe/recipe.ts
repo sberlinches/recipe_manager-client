@@ -1,5 +1,4 @@
 import { Item } from "../item/item";
-import {Fridge} from "../fridge/fridge";
 import {ShoppingList} from "../shoppingList/shoppingList";
 
 export class Recipe {
@@ -96,11 +95,11 @@ export class Recipe {
   }
 
   /**
-   *
-   * @param {number} key
+   * Removes an specific item from the array.
+   * @param {number} key The position in the array where the item is stored
    */
   public removeItem(key: number): void {
-    this.ingredients.splice(Number(key), Number(key)+1);
+    this.ingredients.splice(Number(key), 1);
   }
 
   /**
@@ -112,54 +111,10 @@ export class Recipe {
   }
 
   /**
-   *
-   * @param {number} key
+   * Removes an specific instruction from the array
+   * @param {number} key The position in the array where the instruction is stored
    */
   public removeInstruction(key: number): void {
-    this.instructions.splice(Number(key), Number(key)+1);
-  }
-
-  /**
-   * Gets the items from the fridge and take note of the items that need to be
-   * bought.
-   * @param {ShoppingList} shoppingList
-   */
-  public prepareRecipe(shoppingList: ShoppingList): void {
-
-    /*
-     * Once the "prepare recipe" button is clicked:
-     * The FridgeList have already a copy of the items in the fridge
-     *
-     * This function will:
-     * Add to the shopping list the items that are not in the fridge, or the
-     * ones that are not enough.
-     */
-    for (let recipeItem of this.ingredients) {
-
-      let isInFridge = false;
-
-      for (let fridgeItem of shoppingList.getFridgeListItems()) {
-        if(fridgeItem.getName() == recipeItem.getName()) {
-
-          isInFridge = true;
-
-          if(recipeItem.getQuantity() > fridgeItem.getQuantity())
-            shoppingList.addShoppingListItems(new Item(recipeItem.getName(), recipeItem.getQuantity() - fridgeItem.getQuantity()));
-
-          break;
-        }
-      }
-
-      // If the item is in the fridge
-      if(isInFridge)
-        shoppingList.addShoppingListItems(new Item(recipeItem.getName(), 0));
-      // If the item is not in the fridge
-      else {
-        shoppingList.addShoppingListItems(new Item(recipeItem.getName(), recipeItem.getQuantity()));
-        shoppingList.addFridgeListItem(new Item(recipeItem.getName(), 0));
-      }
-
-      shoppingList.subtractFridgeListItem(recipeItem);
-    }
+    this.instructions.splice(Number(key), 1);
   }
 }

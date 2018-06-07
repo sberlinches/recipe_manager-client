@@ -39,44 +39,15 @@ export class FridgeService {
   }
 
   /**
-   * Adds an item to the shopping list. If the item exists updates the quantity.
+   * Adds an item to the fridge.
+   * Updates the values in the shopping list.
    * @param {Item} item The item to be added
    */
   public addItem(item: Item): void {
     FRIDGE.addItem(item);
 
-    let shoppingList = this._shoppingListService.getShoppingList();
-    let addToFridge = false;
-    let difference = 0;
-
-    // When an item is incremented in the fridge, it is subtracted from the
-    // shopping list
-    for (let sListItem of shoppingList.getShoppingListItems()) {
-      if (sListItem.getName() == item.getName()) {
-
-        difference = item.getQuantity() - sListItem.getQuantity();
-
-        if(difference < 0)
-          sListItem.setQuantity(sListItem.getQuantity() - item.getQuantity());
-        else {
-          sListItem.setQuantity(0);
-          addToFridge = true;
-        }
-
-        break
-      }
-    }
-
-    // Once the shopping list has reached zero, the item begins to be added to
-    // the fridge list
-    if(addToFridge) {
-      for (let fridgeItem of shoppingList.getFridgeListItems()) {
-        if (fridgeItem.getName() == item.getName()) {
-          fridgeItem.setQuantity(difference);
-          break;
-        }
-      }
-    }
+    // Updates the vales in the shopping list
+    this._shoppingListService.removeFromShoppingList(item, item.getQuantity());
   }
 
   /**
@@ -89,75 +60,33 @@ export class FridgeService {
   }
 
   /**
-   * Add x to the quantity of the item.
-   * @param {Item} item
-   * @param {number} x
+   * Adds x to the quantity to the fridge.
+   * Updates the values in the shopping list.
+   * @param {Item} item The item to remove from
+   * @param {number} x The quantity to remove
    */
   public addXToItem(item: Item, x: number): void {
-
-    let shoppingList = this._shoppingListService.getShoppingList();
-    let addToFridge = false;
-
     item.setQuantity(item.getQuantity() + x);
 
-    // When an item is incremented in the fridge, it is subtracted from the
-    // shopping list
-    for (let sListItem of shoppingList.getShoppingListItems()) {
-      if (sListItem.getName() == item.getName()) {
-        if(sListItem.getQuantity() > 0)
-          sListItem.setQuantity(sListItem.getQuantity() - x);
-        else
-          addToFridge = true;
-        break
-      }
-    }
-
-    // Once the shopping list has reached zero, the item begins to be added to
-    // the fridge list
-    if(addToFridge) {
-      for (let fridgeItem of shoppingList.getFridgeListItems()) {
-        if (fridgeItem.getName() == item.getName()) {
-          fridgeItem.setQuantity(fridgeItem.getQuantity() + x);
-          break;
-        }
-      }
-    }
+    // Updates the vales in the shopping list
+    this._shoppingListService.removeFromShoppingList(item, x);
   }
 
   /**
-   * Subtracts x from the quantity of the item. If the quantity drops below
-   * zero, removes the item.
-   * @param {Item} item
-   * @param {number} x
+   * Subtracts x from the quantity from the fridge. If the quantity left drops
+   * below zero is removed from the fridge.
+   * Updates the values in the shopping list.
+   * @param {Item} item The item to remove from
+   * @param {number} x The quantity to remove
    */
   public subtractXFromItem(item: Item, x: number): void {
-
-    let shoppingList = this._shoppingListService.getShoppingList();
-    let addtoShoppingList = false;
 
     if(item.getQuantity() <= 1)
       FRIDGE.removeItem(item);
     else
       item.setQuantity(item.getQuantity()-x);
 
-    // When an item is subtracted from the fridge, it does in the list too
-    for (let fridgeItem of shoppingList.getFridgeListItems()) {
-      if (fridgeItem.getName() == item.getName()) {
-        if(fridgeItem.getQuantity() > 0)
-          fridgeItem.setQuantity(fridgeItem.getQuantity() - x);
-        else
-          addtoShoppingList = true;
-        break;
-      }
-    }
-
-    if(addtoShoppingList) {
-      for (let sListItem of shoppingList.getShoppingListItems()) {
-        if (sListItem.getName() == item.getName()) {
-          sListItem.setQuantity(sListItem.getQuantity() + x);
-          break;
-        }
-      }
-    }
+    // Updates the vales in the shopping list
+    this._shoppingListService.removeFromFridgeList(item, x);
   }
 }

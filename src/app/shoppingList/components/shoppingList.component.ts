@@ -29,9 +29,6 @@ export class ShoppingListComponent implements OnInit {
     this._shoppingList = this._shoppingListService.getShoppingList();
   }
 
-  /**
-   *
-   */
   private populateFridgeList(): void {
     //Copy the current fridge into the shopping list
     for (let item of this._fridgeService.getItems()) {

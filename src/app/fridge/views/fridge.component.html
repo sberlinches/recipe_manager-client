@@ -24,13 +24,13 @@
           <th>Ingredients</th>
           <th>Quantity</th>
         </tr>
-        <tr *ngFor="let content of _fridge.getItems(); let i = index">
+        <tr *ngFor="let item of _fridge.getItems(); let i = index">
           <td></td>
-          <td><h3>{{ content.getName() }}</h3></td>
+          <td><h3>{{ item.getName() }}</h3></td>
           <td>
-            {{ content.getQuantity() }}
-            <button class="pull-right" id="subtract_item_button-{{i}}" title="Subtract from item" (click)="subtractFromItem(i)">-</button>
-            <button class="pull-right" id="add_item_button-{{i}}" title="Add to item" (click)="addToItem(i)">+</button>
+            {{ item.getQuantity() }}
+            <button class="pull-right" id="subtract_item_button-{{i}}" title="Subtract from item" (click)="subtractXFromItem(item)">-</button>
+            <button class="pull-right" id="add_item_button-{{i}}" title="Add to item" (click)="addXToItem(item)">+</button>
           </td>
         </tr>
       </tbody>

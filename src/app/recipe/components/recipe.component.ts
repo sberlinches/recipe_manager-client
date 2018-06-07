@@ -59,20 +59,21 @@ export class RecipeComponent implements OnInit {
     this.showRecipeEditComponent = true;
   }
 
-  public deleteRecipe(index): void {
-    this._recipeService.deleteRecipe(index);
+  public deleteRecipe(index: number): void {
+    this._recipeService.deleteRecipe(index, this._prepareRecipe[index]);
+    this._prepareRecipe[index] = 0;
   }
 
-  public prepareRecipe(index): void {
+  public prepareRecipe(index: number): void {
     this._recipeService.prepareRecipe(
       this._recipeService.getRecipe(index),
       this._shoppingListService.getShoppingList()
     );
 
     // Increment the count
-    if(this._prepareRecipe[index])
-      this._prepareRecipe[index]++;
-    else
-      this._prepareRecipe[index] = 1;
+    if(!this._prepareRecipe[index])
+      this._prepareRecipe[index] = 0;
+
+    this._prepareRecipe[index]++;
   }
 }

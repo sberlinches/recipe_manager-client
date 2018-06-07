@@ -41,7 +41,7 @@ export class RecipeEditComponent implements OnInit {
    * Deletes an ingredient from the recipe.
    * @param {number} index
    */
-  public deleteIngredient(index: number): void {
+  public removeItem(index: number): void {
     this.recipe.removeItem(index);
   }
 
