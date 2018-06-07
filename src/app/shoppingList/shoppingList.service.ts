@@ -49,10 +49,12 @@ export class ShoppingListService {
   public removeFromShoppingList(item: Item, x: number): void {
 
     let diff = 0;
+    let isInToBuy = false;
 
     for (let toBuy of SHOPPINGLIST.getShoppingListItems()) {
       if (toBuy.getName() == item.getName()) {
 
+        isInToBuy = true;
         diff = x - toBuy.getQuantity();
 
         if(diff < 0)
@@ -63,12 +65,14 @@ export class ShoppingListService {
       }
     }
 
-    if(diff >= 0) {
-      for (let inFridge of SHOPPINGLIST.getFridgeListItems()) {
-        if (inFridge.getName() == item.getName()) {
+    for (let inFridge of SHOPPINGLIST.getFridgeListItems()) {
+      if (inFridge.getName() == item.getName()) {
+        if(!isInToBuy)
+          //Updates the list before any recipe is selected
+          inFridge.setQuantity(inFridge.getQuantity() + x);
+        else if(diff > 0)
           inFridge.setQuantity(inFridge.getQuantity() + diff);
-          break;
-        }
+        break;
       }
     }
   }
