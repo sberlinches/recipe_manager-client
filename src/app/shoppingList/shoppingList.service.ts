@@ -80,10 +80,7 @@ export class ShoppingListService {
    */
   public removeFromFridgeList(item: Item, x: number): void {
 
-    x = 10;
-
     let diff = 0;
-    let addtoShoppingList = false;
 
     for (let inFridge of SHOPPINGLIST.getFridgeListItems()) {
       if (inFridge.getName() == item.getName()) {
