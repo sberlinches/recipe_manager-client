@@ -41,7 +41,7 @@ export class ShoppingList {
         return fridgeItem.getQuantity();
     }
 
-    return 0;
+    //return 0;
   }
 
   /**
@@ -81,23 +81,17 @@ export class ShoppingList {
   }
 
 
-  public removeFridgeListItem(item: Item): void {
+  public subtractFridgeListItem(item: Item): void {
 
-    for (let key in this._fridgeListItems) {
+    for (let fridgeItem of this._fridgeListItems) {
 
-      let fridgeItem = this._fridgeListItems[Number(key)];
-
-      if(item.getName() == fridgeItem.getName()) {
+      if(fridgeItem.getName() == item.getName()) {
         // Subtract the item from the fridge
-        fridgeItem.subtract(item);
-        // If the quantity reach zero, remove the item from the list
-        if(fridgeItem.getQuantity() <= 0) {
-          this._fridgeListItems.splice(Number(key), 1);
-          return;
-        }
+        if (fridgeItem.getQuantity() > item.getQuantity())
+          fridgeItem.subtract(item);
+        else
+          fridgeItem.setQuantity(0);
       }
     }
-
-
   }
 }

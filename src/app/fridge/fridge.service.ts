@@ -44,6 +44,39 @@ export class FridgeService {
    */
   public addItem(item: Item): void {
     FRIDGE.addItem(item);
+
+    let shoppingList = this._shoppingListService.getShoppingList();
+    let addToFridge = false;
+    let difference = 0;
+
+    // When an item is incremented in the fridge, it is subtracted from the
+    // shopping list
+    for (let sListItem of shoppingList.getShoppingListItems()) {
+      if (sListItem.getName() == item.getName()) {
+
+        difference = item.getQuantity() - sListItem.getQuantity();
+
+        if(difference < 0)
+          sListItem.setQuantity(sListItem.getQuantity() - item.getQuantity());
+        else {
+          sListItem.setQuantity(0);
+          addToFridge = true;
+        }
+
+        break
+      }
+    }
+
+    // Once the shopping list has reached zero, the item begins to be added to
+    // the fridge list
+    if(addToFridge) {
+      for (let fridgeItem of shoppingList.getFridgeListItems()) {
+        if (fridgeItem.getName() == item.getName()) {
+          fridgeItem.setQuantity(difference);
+          break;
+        }
+      }
+    }
   }
 
   /**
@@ -57,49 +90,74 @@ export class FridgeService {
 
   /**
    * Add x to the quantity of the item.
-   * @param {number} index
+   * @param {Item} item
    * @param {number} x
    */
-  public addXToItem(index: number, x: number): void {
-    let item = FRIDGE.getItem(index);
-    item.setQuantity(item.getQuantity() + x);
+  public addXToItem(item: Item, x: number): void {
 
     let shoppingList = this._shoppingListService.getShoppingList();
+    let addToFridge = false;
 
+    item.setQuantity(item.getQuantity() + x);
 
-    for (let fridgeItem of shoppingList.getFridgeListItems()) {
-      if (fridgeItem.getName() == item.getName()) {
-        fridgeItem.setQuantity(fridgeItem.getQuantity() + x);
-        break;
+    // When an item is incremented in the fridge, it is subtracted from the
+    // shopping list
+    for (let sListItem of shoppingList.getShoppingListItems()) {
+      if (sListItem.getName() == item.getName()) {
+        if(sListItem.getQuantity() > 0)
+          sListItem.setQuantity(sListItem.getQuantity() - x);
+        else
+          addToFridge = true;
+        break
       }
     }
 
-    for (let basketItem of shoppingList.getShoppingListItems()) {
-      if (basketItem.getName() == item.getName()) {
-        if(basketItem.getQuantity() >= x)
-          basketItem.setQuantity(basketItem.getQuantity() - x);
-        else {
-          basketItem.setQuantity(0);
-          shoppingList.getFridgeListItems().push(new Item(item.getName(), x))
+    // Once the shopping list has reached zero, the item begins to be added to
+    // the fridge list
+    if(addToFridge) {
+      for (let fridgeItem of shoppingList.getFridgeListItems()) {
+        if (fridgeItem.getName() == item.getName()) {
+          fridgeItem.setQuantity(fridgeItem.getQuantity() + x);
+          break;
         }
       }
     }
-
   }
 
   /**
    * Subtracts x from the quantity of the item. If the quantity drops below
    * zero, removes the item.
-   * @param {number} index
+   * @param {Item} item
    * @param {number} x
    */
-  public subtractXFromItem(index: number, x: number): void {
+  public subtractXFromItem(item: Item, x: number): void {
 
-    let item = FRIDGE.getItem(index);
+    let shoppingList = this._shoppingListService.getShoppingList();
+    let addtoShoppingList = false;
 
-    if(item.getQuantity() <= 0)
+    if(item.getQuantity() <= 1)
       FRIDGE.removeItem(item);
     else
       item.setQuantity(item.getQuantity()-x);
+
+    // When an item is subtracted from the fridge, it does in the list too
+    for (let fridgeItem of shoppingList.getFridgeListItems()) {
+      if (fridgeItem.getName() == item.getName()) {
+        if(fridgeItem.getQuantity() > 0)
+          fridgeItem.setQuantity(fridgeItem.getQuantity() - x);
+        else
+          addtoShoppingList = true;
+        break;
+      }
+    }
+
+    if(addtoShoppingList) {
+      for (let sListItem of shoppingList.getShoppingListItems()) {
+        if (sListItem.getName() == item.getName()) {
+          sListItem.setQuantity(sListItem.getQuantity() + x);
+          break;
+        }
+      }
+    }
   }
 }

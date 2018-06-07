@@ -126,17 +126,23 @@ export class Recipe {
    */
   public prepareRecipe(shoppingList: ShoppingList): void {
 
+    /*
+     * Once the "prepare recipe" button is clicked:
+     * The FridgeList have already a copy of the items in the fridge
+     *
+     * This function will:
+     * Add to the shopping list the items that are not in the fridge, or the
+     * ones that are not enough.
+     */
     for (let recipeItem of this.ingredients) {
 
       let isInFridge = false;
 
       for (let fridgeItem of shoppingList.getFridgeListItems()) {
-        if(recipeItem.getName() == fridgeItem.getName()) {
+        if(fridgeItem.getName() == recipeItem.getName()) {
 
           isInFridge = true;
 
-          // If the quantity in the recipe is bigger, add to the shopping list
-          // the difference
           if(recipeItem.getQuantity() > fridgeItem.getQuantity())
             shoppingList.addShoppingListItems(new Item(recipeItem.getName(), recipeItem.getQuantity() - fridgeItem.getQuantity()));
 
@@ -148,11 +154,12 @@ export class Recipe {
       if(isInFridge)
         shoppingList.addShoppingListItems(new Item(recipeItem.getName(), 0));
       // If the item is not in the fridge
-      else
+      else {
         shoppingList.addShoppingListItems(new Item(recipeItem.getName(), recipeItem.getQuantity()));
+        shoppingList.addFridgeListItem(new Item(recipeItem.getName(), 0));
+      }
 
-      // Subtract or removes
-      shoppingList.removeFridgeListItem(recipeItem);
+      shoppingList.subtractFridgeListItem(recipeItem);
     }
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FridgeService } from "../fridge.service";
 import { Fridge } from "../fridge";
+import {FRIDGE} from "../fridge.mock";
 
 @Component({
   selector: 'app-fridge',
@@ -37,10 +38,12 @@ export class FridgeComponent implements OnInit {
   }
 
   public addToItem(index: number): void {
-    this._fridgeService.addXToItem(index, 1);
+    let item = this._fridgeService.getItem(index);
+    this._fridgeService.addXToItem(item, 1);
   }
 
   public subtractFromItem(index: number): void {
-    this._fridgeService.subtractXFromItem(index, 1);
+    let item = this._fridgeService.getItem(index);
+    this._fridgeService.subtractXFromItem(item, 1);
   }
 }
