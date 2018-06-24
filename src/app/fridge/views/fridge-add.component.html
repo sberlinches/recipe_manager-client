@@ -11,8 +11,7 @@
         <input type="text"
                id="item_name"
                name="item_name"
-               [ngModel]="item.getName()"
-               (ngModelChange)="item.setName($event)"
+               [(ngModel)]="item.name"
                minlength="2"
                maxlength="30"
                required>
@@ -23,8 +22,7 @@
         <input type="number"
                id="item_quantity"
                name="item_quantity"
-               [ngModel]="item.getQuantity()"
-               (ngModelChange)="item.setQuantity($event)"
+               [(ngModel)]="item.quantity"
                required>
       </div>
 

@@ -36,7 +36,7 @@ export class Fridge {
   public addItem(item: Item): void {
 
     for (let fridgeItem of this.items) {
-      if(item.getName() == fridgeItem.getName()) {
+      if(item.name == fridgeItem.name) {
         // If the item exists, add the quantity
         fridgeItem.add(item);
         return;
@@ -57,11 +57,11 @@ export class Fridge {
 
       let fridgeItem = this.items[Number(key)];
 
-      if(item.getName() == fridgeItem.getName()) {
+      if(item.name == fridgeItem.name) {
         // Subtract the item from the fridge
         fridgeItem.subtract(item);
         // If the quantity reach zero, remove the item from the list
-        if(fridgeItem.getQuantity() <= 0) {
+        if(fridgeItem.quantity <= 0) {
           this.items.splice(Number(key), 1);
           return;
         }
@@ -84,19 +84,19 @@ export class Fridge {
       fridge: []
     };
 
-    for (let recipeItem of recipe.getIngredients()) {
+    for (let recipeItem of recipe.items) {
 
       let isInFridge = false;
 
       for (let fridgeItem of this.items) {
 
         // If the item is in the fridge...
-        if (recipeItem.getName() == fridgeItem.getName()) {
+        if (recipeItem.name == fridgeItem.name) {
 
           // ... and there's not enough quantity, add it to both lists
-          if (recipeItem.getQuantity() > fridgeItem.getQuantity()) {
+          if (recipeItem.quantity > fridgeItem.quantity) {
             list.fridge.push(fridgeItem);
-            list.shopping.push(new Item(recipeItem.getName(), recipeItem.getQuantity()- fridgeItem.getQuantity()));
+            list.shopping.push(new Item(recipeItem.name, recipeItem.quantity- fridgeItem.quantity));
           }
           // ...and there's enough quantity, add it to the "fridge list"
           else list.fridge.push(fridgeItem);

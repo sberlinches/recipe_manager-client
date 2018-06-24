@@ -47,7 +47,7 @@ export class FridgeService {
     FRIDGE.addItem(item);
 
     // Updates the vales in the shopping list
-    this._shoppingListService.removeFromShoppingList(item, item.getQuantity());
+    this._shoppingListService.removeFromShoppingList(item, item.quantity);
   }
 
   /**
@@ -66,7 +66,7 @@ export class FridgeService {
    * @param {number} x The quantity to remove
    */
   public addXToItem(item: Item, x: number): void {
-    item.setQuantity(item.getQuantity() + x);
+    item.quantity = item.quantity + x;
 
     // Updates the vales in the shopping list
     this._shoppingListService.removeFromShoppingList(item, x);
@@ -81,10 +81,10 @@ export class FridgeService {
    */
   public subtractXFromItem(item: Item, x: number): void {
 
-    if(item.getQuantity() <= 1)
+    if(item.quantity <= 1)
       FRIDGE.removeItem(item);
     else
-      item.setQuantity(item.getQuantity()-x);
+      item.quantity = item.quantity - x;
 
     // Updates the vales in the shopping list
     this._shoppingListService.removeFromFridgeList(item, x);

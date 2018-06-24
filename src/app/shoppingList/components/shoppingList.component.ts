@@ -32,7 +32,7 @@ export class ShoppingListComponent implements OnInit {
   private populateFridgeList(): void {
     //Copy the current fridge into the shopping list
     for (let item of this._fridgeService.getItems()) {
-      this._shoppingListService.addFridgeListItem(new Item(item.getName(), item.getQuantity()));
+      this._shoppingListService.addFridgeListItem(new Item(item.name, item.quantity));
     }
   }
 

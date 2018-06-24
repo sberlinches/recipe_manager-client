@@ -10,16 +10,22 @@ import { Item } from "../../item/item";
 })
 export class RecipeEditComponent implements OnInit {
 
-  @Input() index: number;
+  @Input() id: number;
   @Output() closeModal = new EventEmitter();
-  public recipe: Recipe;
+  public _recipe: Recipe;
 
   constructor(
-    private recipeService: RecipeService
+    private _recipeService: RecipeService
   ) {}
 
   ngOnInit() {
-    this.recipe = this.recipeService.getRecipe(this.index);
+    this.getRecipe(this.id);
+  }
+
+  private getRecipe(id: number): void {
+    this._recipeService
+        .getRecipe(id)
+        .subscribe(data => this._recipe = data as Recipe)
   }
 
   /**
@@ -30,7 +36,7 @@ export class RecipeEditComponent implements OnInit {
   public addIngredient(name, quantity): void {
 
     if(name.value != '' && quantity.value != '') {
-      this.recipe.addItem(new Item(name.value, quantity.value));
+      this._recipe.addItem(new Item(name.value, quantity.value));
       // Empty the inputs
       name.value = '';
       quantity.value = '';
@@ -42,7 +48,7 @@ export class RecipeEditComponent implements OnInit {
    * @param {number} index
    */
   public removeItem(index: number): void {
-    this.recipe.removeItem(index);
+    this._recipe.removeItem(index);
   }
 
   /**
@@ -52,7 +58,7 @@ export class RecipeEditComponent implements OnInit {
   public addInstruction(instruction): void {
 
     if(instruction.value != '') {
-      this.recipe.addInstruction(instruction.value);
+      this._recipe.addInstruction(instruction.value);
       //Empty the input
       instruction.value = null;
     }
@@ -63,7 +69,7 @@ export class RecipeEditComponent implements OnInit {
    * @param {number} index
    */
   public deleteInstruction(index: number): void {
-    this.recipe.removeInstruction(index);
+    this._recipe.removeInstruction(index);
   }
 
   /**

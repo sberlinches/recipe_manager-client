@@ -52,26 +52,26 @@ export class ShoppingListService {
     let isInToBuy = false;
 
     for (let toBuy of SHOPPINGLIST.getShoppingListItems()) {
-      if (toBuy.getName() == item.getName()) {
+      if (toBuy.name == item.name) {
 
         isInToBuy = true;
-        diff = x - toBuy.getQuantity();
+        diff = x - toBuy.quantity;
 
         if(diff < 0)
-          toBuy.setQuantity(toBuy.getQuantity() - x);
+          toBuy.quantity = toBuy.quantity - x;
         else
-          toBuy.setQuantity(0);
+          toBuy.quantity = 0;
         break
       }
     }
 
     for (let inFridge of SHOPPINGLIST.getFridgeListItems()) {
-      if (inFridge.getName() == item.getName()) {
+      if (inFridge.name == item.name) {
         if(!isInToBuy)
           //Updates the list before any recipe is selected
-          inFridge.setQuantity(inFridge.getQuantity() + x);
+          inFridge.quantity = inFridge.quantity + x;
         else if(diff > 0)
-          inFridge.setQuantity(inFridge.getQuantity() + diff);
+          inFridge.quantity = inFridge.quantity + diff;
         break;
       }
     }
@@ -87,22 +87,22 @@ export class ShoppingListService {
     let diff = 0;
 
     for (let inFridge of SHOPPINGLIST.getFridgeListItems()) {
-      if (inFridge.getName() == item.getName()) {
+      if (inFridge.name == item.name) {
 
-        diff = x - inFridge.getQuantity();
+        diff = x - inFridge.quantity;
 
         if(diff < 0)
-          inFridge.setQuantity(inFridge.getQuantity() - x);
+          inFridge.quantity = inFridge.quantity - x;
         else
-          inFridge.setQuantity(0);
+          inFridge.quantity = 0;
         break;
       }
     }
 
     if(diff >= 0) {
       for (let toBuy of SHOPPINGLIST.getShoppingListItems()) {
-        if (toBuy.getName() == item.getName()) {
-          toBuy.setQuantity(toBuy.getQuantity() + diff);
+        if (toBuy.name == item.name) {
+          toBuy.quantity = toBuy.quantity + diff;
           break;
         }
       }

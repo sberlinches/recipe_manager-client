@@ -11,8 +11,7 @@
         <input type="text"
                id="recipe_name"
                name="recipe_name"
-               [ngModel]="recipe.getName()"
-               (ngModelChange)="recipe.setName($event)"
+               [(ngModel)]="_recipe.name"
                minlength="2"
                maxlength="30"
                required>
@@ -23,27 +22,24 @@
         <input type="number"
                id="recipe_estimated_time"
                name="recipe_estimated_time"
-               [ngModel]="recipe.getEstimatedTime()"
-               (ngModelChange)="recipe.setEstimatedTime($event)"
+               [(ngModel)]="_recipe.estimatedTime"
                required>
       </div>
 
       <div>
         <label>Ingredients:</label>
-        <span *ngFor="let ingredient of recipe.getIngredients(); let i = index;">
+        <span *ngFor="let item of _recipe.items; let i = index;">
           <input class="a2"
                  type="text"
                  id="ingredient_name-{{i}}"
                  name="ingredient_name-{{i}}"
-                 [ngModel]="ingredient.getName()"
-                 (ngModelChange)="ingredient.setName($event)"
+                 [(ngModel)]="item.name"
                  required>
           <input class="b2"
                  type="number"
                  id="ingredient_quantity-{{i}}"
                  name="ingredient_quantity-{{i}}"
-                 [ngModel]="ingredient.getQuantity()"
-                 (ngModelChange)="ingredient.setQuantity($event)"
+                 [(ngModel)]="item.quantity"
                  min="0"
                  required>
           <button id="remove_ingredient_button-{{i}}"
@@ -62,10 +58,10 @@
 
       <div>
         <label>Instructions:</label>
-        <span *ngFor="let instruction of recipe.getInstructions(); let i = index;">
+        <span *ngFor="let instruction of _recipe.instructions; let i = index;">
           <textarea id="instruction-{{i}}"
                     name="instruction-{{i}}"
-                    [(ngModel)]="recipe.getInstructions()[i]"
+                    [(ngModel)]="_recipe.instructions[i]"
                     required>{{ instruction }}
           </textarea>
           <button id="remove_instruction_button-{{i}}"

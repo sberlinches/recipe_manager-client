@@ -11,14 +11,14 @@ import { Item } from "../../item/item";
 export class RecipeNewComponent implements OnInit {
 
   @Output() closeModal = new EventEmitter();
-  public recipe: Recipe;
+  public _recipe: Recipe;
 
   constructor(
-    private recipeService: RecipeService
-  ) { }
+    private _recipeService: RecipeService
+  ) {}
 
   ngOnInit() {
-    this.recipe = new Recipe('',[],[],0);
+    this._recipe = new Recipe('',[],[],0);
   }
 
   /**
@@ -29,7 +29,7 @@ export class RecipeNewComponent implements OnInit {
   public addIngredient(name, quantity): void {
 
     if(name.value != '' && quantity.value != '') {
-      this.recipe.addItem(new Item(name.value, quantity.value));
+      this._recipe.addItem(new Item(name.value, quantity.value));
       // Empty the inputs
       name.value = '';
       quantity.value = '';
@@ -41,7 +41,7 @@ export class RecipeNewComponent implements OnInit {
    * @param {number} index
    */
   public deleteIngredient(index: number): void {
-    this.recipe.removeItem(index);
+    this._recipe.removeItem(index);
   }
 
   /**
@@ -51,7 +51,7 @@ export class RecipeNewComponent implements OnInit {
   public addInstruction(instruction): void {
 
     if(instruction.value != '') {
-      this.recipe.addInstruction(instruction.value);
+      this._recipe.addInstruction(instruction.value);
       //Empty the input
       instruction.value = null;
     }
@@ -62,7 +62,7 @@ export class RecipeNewComponent implements OnInit {
    * @param {number} index
    */
   public deleteInstruction(index: number): void {
-    this.recipe.removeInstruction(index);
+    this._recipe.removeInstruction(index);
   }
 
   /**
@@ -71,8 +71,15 @@ export class RecipeNewComponent implements OnInit {
    */
   onSubmit(form) {
     if(form.valid) {
-      this.recipeService.newRecipe(this.recipe);
-      this.closeModal.emit();
+
+      this._recipeService
+          .newRecipe(this._recipe)
+          .subscribe(data => {
+            // If data is true(1), the recipe was created
+            if(data) {
+              this.closeModal.emit(); //TODO: close modal is going to call getRecipes(). Needless to say that it could be improved...
+            }
+          });
     }
   }
 

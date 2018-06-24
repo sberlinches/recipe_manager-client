@@ -15,10 +15,10 @@ import { Recipe } from "../recipe";
 })
 export class RecipeComponent implements OnInit {
 
-  public recipes: Recipe[];
+  public _recipes: Recipe[];
   public _showContent: boolean;
   public selected: number;
-  public index: number;
+  public id: number;
   public showRecipeEditComponent: boolean;
   public showRecipeNewComponent: boolean;
   public _prepareRecipe: number[];
@@ -28,10 +28,11 @@ export class RecipeComponent implements OnInit {
     private _fridgeService: FridgeService,
     private _shoppingListService: ShoppingListService,
   ) {
+    this._recipes = [];
     this._showContent = true;
     this.showRecipeEditComponent = false;
     this.showRecipeNewComponent = false;
-    this._prepareRecipe = [];
+    this._prepareRecipe = []; //Stores the number of servings per recipe
   }
 
   public ngOnInit() {
@@ -39,7 +40,9 @@ export class RecipeComponent implements OnInit {
   }
 
   private getRecipes(): void {
-    this.recipes = this._recipeService.getRecipes();
+    this._recipeService
+        .getRecipes()
+        .subscribe(data => this._recipes = data as Recipe[]);
   }
 
   public showContent() {
@@ -54,19 +57,37 @@ export class RecipeComponent implements OnInit {
     this.showRecipeNewComponent = true;
   }
 
-  public editRecipe(index: number): void {
-    this.index = index;
+  public editRecipe(id: number): void {
+    this.id = id;
     this.showRecipeEditComponent = true;
   }
 
-  public deleteRecipe(index: number): void {
-    this._recipeService.deleteRecipe(index, this._prepareRecipe[index]);
-    this._prepareRecipe[index] = 0;
+  public deleteRecipe(id: number, index: number): void {
+
+    this._recipeService
+        .deleteRecipe(id)
+        .subscribe(data => {
+          // If data is true(1), the recipe was deleted
+          if(data) {
+            this.getRecipes(); //TODO: This should delete the object from the current list, not requesting the recipe list again
+
+            // Updates the vales in the shopping list
+            for (let item of this._recipes[index].items)
+              this._shoppingListService.removeFromShoppingList(item, item.quantity * this._prepareRecipe[index]);
+
+            this._prepareRecipe[index] = 0;
+          }
+        });
   }
 
+  /**
+   * Prepares a recipe.
+   * Take note of the items that are needed to buy and the ones that are left in the fridge
+   * @param {number} index
+   */
   public prepareRecipe(index: number): void {
     this._recipeService.prepareRecipe(
-      this._recipeService.getRecipe(index),
+      this._recipes[index],
       this._shoppingListService.getShoppingList()
     );
 

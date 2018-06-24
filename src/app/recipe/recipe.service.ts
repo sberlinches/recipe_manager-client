@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { RECIPES } from './recipe.mock';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 import { Recipe } from './recipe';
 import { ShoppingList } from "../shoppingList/shoppingList";
 import { Item } from "../item/item";
-import { ShoppingListService } from "../shoppingList/shoppingList.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,32 +12,37 @@ import { ShoppingListService } from "../shoppingList/shoppingList.service";
 export class RecipeService {
 
   constructor(
-    private _shoppingListService: ShoppingListService
+    private httpClient: HttpClient
   ) { }
 
   /**
-   * Gets the recipes.
-   * @returns {Recipe[]} The recipe object
+   * Gets all recipes
+   * @returns {Observable<object>}
    */
-  public getRecipes(): Recipe[] {
-    return RECIPES;
+  getRecipes(): Observable<object> {
+    return this.httpClient
+        .get('http://localhost:8080/api/recipe/');
   }
 
   /**
    * Gets a recipe.
-   * @param {number} index The index of the recipe in the array
-   * @returns {Recipe}
+   * @param {number} id The recipe ID
+   * @returns {Observable<object>}
    */
-  public getRecipe(index: number): Recipe {
-    return RECIPES[index];
+  getRecipe(id: number): Observable<object> {
+    //const params = new HttpParams().set('id', id);
+    return this.httpClient
+        .get('http://localhost:8080/api/recipe/' + id); //TODO: Angular 6 has this parameters thing messed. Old school style
   }
 
   /**
    * Creates a new recipe.
-   * @param {Recipe} recipe
+   * @param {Recipe} recipe The recipe object
+   * @returns {Observable<object>}
    */
-  public newRecipe(recipe: Recipe): void {
-    RECIPES.push(recipe);
+  public newRecipe(recipe: Recipe): Observable<object> {
+    return this.httpClient
+        .post('http://localhost:8080/api/recipe/', recipe);
   }
 
   /**
@@ -45,21 +51,16 @@ export class RecipeService {
    * @param {Recipe} recipe
    */
   public editRecipe(index: number, recipe: Recipe): void {
-    RECIPES[index] = recipe;
+    //RECIPES[index] = recipe;
   }
 
   /**
    * Deletes a recipe.
    * @param {number} index The index of the recipe in the array
-   * @param {number} servings The number of servings the recipe is prepared
    */
-  public deleteRecipe(index: number, servings: number): void {
-
-    // Updates the vales in the shopping list
-    for (let item of this.getRecipe(index).getIngredients())
-      this._shoppingListService.removeFromShoppingList(item, item.getQuantity()*servings);
-
-    RECIPES.splice(index, 1);
+  public deleteRecipe(id: number): Observable<object> {
+    return this.httpClient
+        .delete('http://localhost:8080/api/recipe/' + id);
   }
 
   /**
@@ -78,17 +79,17 @@ export class RecipeService {
     * Add to the shopping list the items that are not in the fridge, or the
     * ones that are not enough.
     */
-    for (let recipeItem of recipe.getIngredients()) {
+    for (let recipeItem of recipe.items) {
 
       let isInFridge = false;
 
       for (let fridgeItem of shoppingList.getFridgeListItems()) {
-        if(fridgeItem.getName() == recipeItem.getName()) {
+        if(fridgeItem.name == recipeItem.name) {
 
           isInFridge = true;
 
-          if(recipeItem.getQuantity() > fridgeItem.getQuantity())
-            shoppingList.addShoppingListItems(new Item(recipeItem.getName(), recipeItem.getQuantity() - fridgeItem.getQuantity()));
+          if(recipeItem.quantity > fridgeItem.quantity)
+            shoppingList.addShoppingListItems(new Item(recipeItem.name, recipeItem.quantity - fridgeItem.quantity));
 
           break;
         }
@@ -96,11 +97,11 @@ export class RecipeService {
 
       // If the item is in the fridge
       if(isInFridge)
-        shoppingList.addShoppingListItems(new Item(recipeItem.getName(), 0));
+        shoppingList.addShoppingListItems(new Item(recipeItem.name, 0));
       // If the item is not in the fridge
       else {
-        shoppingList.addShoppingListItems(new Item(recipeItem.getName(), recipeItem.getQuantity()));
-        shoppingList.addFridgeListItem(new Item(recipeItem.getName(), 0));
+        shoppingList.addShoppingListItems(new Item(recipeItem.name, recipeItem.quantity));
+        shoppingList.addFridgeListItem(new Item(recipeItem.name, 0));
       }
 
       shoppingList.subtractFridgeListItem(recipeItem);

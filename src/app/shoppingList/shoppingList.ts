@@ -37,8 +37,8 @@ export class ShoppingList {
   public getFridgeItemQuantityByItem(item: Item): number {
 
     for (let fridgeItem of this._fridgeListItems) {
-      if(fridgeItem.getName() == item.getName())
-        return fridgeItem.getQuantity();
+      if(fridgeItem.name == item.name)
+        return fridgeItem.quantity;
     }
 
     //return 0;
@@ -52,7 +52,7 @@ export class ShoppingList {
 
     // If the item exists, add the quantity
     for (let listItem of this._shoppingListItems) {
-      if(item.getName() == listItem.getName()) {
+      if(item.name == listItem.name) {
         listItem.add(item);
         return;
       }
@@ -71,7 +71,7 @@ export class ShoppingList {
 
     // If the item exists, add the quantity
     for (let listItem of this._fridgeListItems) {
-      if(item.getName() == listItem.getName()) {
+      if(item.name == listItem.name) {
         listItem.add(item);
         return;
       }
@@ -85,12 +85,12 @@ export class ShoppingList {
 
     for (let fridgeItem of this._fridgeListItems) {
 
-      if(fridgeItem.getName() == item.getName()) {
+      if(fridgeItem.name == item.name) {
         // Subtract the item from the fridge
-        if (fridgeItem.getQuantity() > item.getQuantity())
+        if (fridgeItem.quantity > item.quantity)
           fridgeItem.subtract(item);
         else
-          fridgeItem.setQuantity(0);
+          fridgeItem.quantity = 0;
       }
     }
   }

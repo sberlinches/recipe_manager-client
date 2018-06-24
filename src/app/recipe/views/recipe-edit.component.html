@@ -1,18 +1,17 @@
 <div class="modal">
-  <div id="recipe_edit-{{index}}" class="modal-container">
+  <div id="recipe_edit-{{id}}" class="modal-container">
     <header class="modal-header">
       <h2 class="pull-left">Edit recipe</h2>
       <button class="pull-right" type="button" title="Cancel" (click)="cancel()">×</button>
     </header>
 
-    <form id="edit_recipe_form" class="modal-body">
+    <form *ngIf="_recipe" id="edit_recipe_form" class="modal-body">
       <div>
         <label for="recipe_name">Name:</label>
         <input type="text"
                id="recipe_name"
                name="recipe_name"
-               [ngModel]="recipe.getName()"
-               (ngModelChange)="recipe.setName($event)"
+               [(ngModel)]="_recipe.name"
                minlength="2"
                maxlength="30"
                required>
@@ -23,27 +22,24 @@
         <input type="number"
                id="recipe_estimated_time"
                name="recipe_estimated_time"
-               [ngModel]="recipe.getEstimatedTime()"
-               (ngModelChange)="recipe.setEstimatedTime($event)"
+               [(ngModel)]="_recipe.estimatedTime"
                required>
       </div>
 
       <div>
         <label>Ingredients:</label>
-        <span *ngFor="let ingredient of recipe.getIngredients(); let i = index;">
+        <span *ngFor="let item of _recipe.items; let i = index;">
           <input class="a2"
                  type="text"
                  id="ingredient_name-{{i}}"
                  name="ingredient_name-{{i}}"
-                 [ngModel]="ingredient.getName()"
-                 (ngModelChange)="ingredient.setName($event)"
+                 [(ngModel)]="item.name"
                  required>
           <input class="b2"
                  type="number"
                  id="ingredient_quantity-{{i}}"
                  name="ingredient_quantity-{{i}}"
-                 [ngModel]="ingredient.getQuantity()"
-                 (ngModelChange)="ingredient.setQuantity($event)"
+                 [(ngModel)]="item.quantity"
                  min="0"
                  required>
           <button id="remove_ingredient_button-{{i}}"
@@ -62,10 +58,10 @@
 
       <div>
         <label>Instructions:</label>
-        <span *ngFor="let instruction of recipe.getInstructions(); let i = index; trackBy: trackRecipe;">
+        <span *ngFor="let instruction of _recipe.instructions; let i = index; trackBy: trackRecipe;">
           <textarea id="instruction-{{i}}"
                     name="instruction-{{i}}"
-                    [(ngModel)]="recipe.getInstructions()[i]"
+                    [(ngModel)]="_recipe.instructions[i]"
                     required>{{ instruction }}
           </textarea>
           <button id="remove_instruction_button-{{i}}"
