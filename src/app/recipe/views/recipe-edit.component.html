@@ -5,7 +5,7 @@
       <button class="pull-right" type="button" title="Cancel" (click)="cancel()">×</button>
     </header>
 
-    <form *ngIf="_recipe" id="edit_recipe_form" class="modal-body">
+    <form *ngIf="_recipe" id="edit_recipe_form" class="modal-body" #editRecipeForm="ngForm" (ngSubmit)="onSubmit(editRecipeForm)">
       <div>
         <label for="recipe_name">Name:</label>
         <input type="text"
@@ -73,6 +73,13 @@
           <textarea id="instruction" #instruction></textarea>
           <button id="add_instruction_button" type="button" title="Add step" (click)="addInstruction(instruction)">+</button>
         </span>
+      </div>
+
+      <div class="align-right">
+        <button type="button"
+                (click)="cancel()">Cancel</button>
+        <button type="submit"
+                [disabled]="!editRecipeForm.valid">Submit</button>
       </div>
     </form>
   </div>

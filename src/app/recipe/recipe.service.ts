@@ -47,11 +47,12 @@ export class RecipeService {
 
   /**
    * Edits a recipe.
-   * @param {number} index The index of the recipe in the array
-   * @param {Recipe} recipe
+   * @param {Recipe} recipe The recipe object
+   * @returns {Observable<object>}
    */
-  public editRecipe(index: number, recipe: Recipe): void {
-    //RECIPES[index] = recipe;
+  public editRecipe(recipe: Recipe): Observable<object> {
+    return this.httpClient
+        .patch('http://localhost:8080/api/recipe/' + recipe.id, recipe);
   }
 
   /**

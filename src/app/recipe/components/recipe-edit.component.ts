@@ -36,7 +36,7 @@ export class RecipeEditComponent implements OnInit {
   public addIngredient(name, quantity): void {
 
     if(name.value != '' && quantity.value != '') {
-      this._recipe.addItem(new Item(name.value, quantity.value));
+      this._recipe.items.push(new Item(name.value, quantity.value));
       // Empty the inputs
       name.value = '';
       quantity.value = '';
@@ -48,7 +48,7 @@ export class RecipeEditComponent implements OnInit {
    * @param {number} index
    */
   public removeItem(index: number): void {
-    this._recipe.removeItem(index);
+    this._recipe.items.splice(index, 1);
   }
 
   /**
@@ -58,7 +58,7 @@ export class RecipeEditComponent implements OnInit {
   public addInstruction(instruction): void {
 
     if(instruction.value != '') {
-      this._recipe.addInstruction(instruction.value);
+      this._recipe.instructions.push(instruction.value);
       //Empty the input
       instruction.value = null;
     }
@@ -69,7 +69,25 @@ export class RecipeEditComponent implements OnInit {
    * @param {number} index
    */
   public deleteInstruction(index: number): void {
-    this._recipe.removeInstruction(index);
+    this._recipe.instructions.splice(index, 1);
+  }
+
+  /**
+   *
+   * @param form
+   */
+  onSubmit(form) {
+
+    if(form.valid) {
+      this._recipeService
+          .editRecipe(this._recipe)
+          .subscribe(data => {
+            // If data is true(1), the recipe was created
+            if(data) {
+              this.closeModal.emit(); //TODO: close modal is going to call getRecipes(). Needless to say that it could be improved...
+            }
+          });
+    }
   }
 
   /**

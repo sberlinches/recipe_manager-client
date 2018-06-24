@@ -70,8 +70,8 @@ export class RecipeNewComponent implements OnInit {
    * @param form
    */
   onSubmit(form) {
-    if(form.valid) {
 
+    if(form.valid) {
       this._recipeService
           .newRecipe(this._recipe)
           .subscribe(data => {
