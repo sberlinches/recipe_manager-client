@@ -2,7 +2,7 @@ import { Item } from "../item/item";
 
 export class Recipe {
 
-  public id: number;
+  public _id: string;
   public name: string;
   public items: Item[];
   public instructions: string[];

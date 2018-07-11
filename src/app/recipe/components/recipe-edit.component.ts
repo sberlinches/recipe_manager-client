@@ -10,7 +10,7 @@ import { Item } from "../../item/item";
 })
 export class RecipeEditComponent implements OnInit {
 
-  @Input() id: number;
+  @Input() _id: string;
   @Output() closeModal = new EventEmitter();
   public _recipe: Recipe;
 
@@ -19,13 +19,14 @@ export class RecipeEditComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getRecipe(this.id);
+    this.getRecipe(this._id);
   }
 
-  private getRecipe(id: number): void {
+  private getRecipe(id: string): void {
     this._recipeService
         .getRecipe(id)
-        .subscribe(data => this._recipe = data as Recipe)
+        .then(data => {this._recipe = data as Recipe}) //Promises
+        //.subscribe(data => this._recipe = data as Recipe) //Observables
   }
 
   /**
@@ -81,7 +82,8 @@ export class RecipeEditComponent implements OnInit {
     if(form.valid) {
       this._recipeService
           .editRecipe(this._recipe)
-          .subscribe(data => {
+          .then(data => { //Promises
+          //.subscribe(data => { //Observables
             // If data is true(1), the recipe was created
             if(data) {
               this.closeModal.emit(); //TODO: close modal is going to call getRecipes(). Needless to say that it could be improved...

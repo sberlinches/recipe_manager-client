@@ -2,7 +2,7 @@
   <app-recipe-new *ngIf="showRecipeNewComponent"
                   (closeModal)="showRecipeNewComponent = false; getRecipes()"></app-recipe-new>
   <app-recipe-edit *ngIf="showRecipeEditComponent"
-                   [id]="id"
+                   [_id]="_id"
                    (closeModal)="showRecipeEditComponent = false; getRecipes()"></app-recipe-edit>
 
   <div class="article-main">
@@ -37,8 +37,8 @@
 
             <div class="pull-right">
               <button id="recipe_prepare_button-{{i}}" type="button" (click)="prepareRecipe(i)" >Prepare <span *ngIf="_prepareRecipe[i]">×{{ _prepareRecipe[i] }}</span></button>
-              <button id="recipe_edit_button-{{i}}" type="button" (click)="editRecipe(recipe.id)">Edit</button>
-              <button id="recipe_delete_button-{{i}}" type="button" (click)="deleteRecipe(recipe.id, i)">Delete</button>
+              <button id="recipe_edit_button-{{i}}" type="button" (click)="editRecipe(recipe._id)">Edit</button>
+              <button id="recipe_delete_button-{{i}}" type="button" (click)="deleteRecipe(recipe._id, i)">Delete</button>
             </div>
 
             <div id="recipe_details-{{i}}" *ngIf="selected == i">

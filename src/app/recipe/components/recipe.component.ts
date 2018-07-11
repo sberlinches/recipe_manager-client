@@ -18,7 +18,7 @@ export class RecipeComponent implements OnInit {
   public _recipes: Recipe[];
   public _showContent: boolean;
   public selected: number;
-  public id: number;
+  public _id: string;
   public showRecipeEditComponent: boolean;
   public showRecipeNewComponent: boolean;
   public _prepareRecipe: number[];
@@ -42,7 +42,8 @@ export class RecipeComponent implements OnInit {
   private getRecipes(): void {
     this._recipeService
         .getRecipes()
-        .subscribe(data => this._recipes = data as Recipe[]);
+        .then(data => {this._recipes = data as Recipe[]}) //Promises
+        //.subscribe(data => this._recipes = data as Recipe[]); //Observables
   }
 
   public showContent() {
@@ -57,16 +58,17 @@ export class RecipeComponent implements OnInit {
     this.showRecipeNewComponent = true;
   }
 
-  public editRecipe(id: number): void {
-    this.id = id;
+  public editRecipe(id: string): void {
+    this._id = id;
     this.showRecipeEditComponent = true;
   }
 
-  public deleteRecipe(id: number, index: number): void {
+  public deleteRecipe(id: string, index: number): void {
 
     this._recipeService
         .deleteRecipe(id)
-        .subscribe(data => {
+        .then(data => { //Promises
+        //.subscribe(data => {  //Observables
           // If data is true(1), the recipe was deleted
           if(data) {
             this.getRecipes(); //TODO: This should delete the object from the current list, not requesting the recipe list again

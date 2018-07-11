@@ -19,9 +19,14 @@ export class RecipeService {
    * Gets all recipes
    * @returns {Observable<object>}
    */
-  getRecipes(): Observable<object> {
+  /*getRecipes(): Observable<object> {
     return this.httpClient
         .get('http://localhost:8080/api/recipe/');
+  }*/
+  getRecipes(): Promise<object> {
+    return this.httpClient
+        .get('http://localhost:8080/api/recipe/')
+        .toPromise()
   }
 
   /**
@@ -29,10 +34,16 @@ export class RecipeService {
    * @param {number} id The recipe ID
    * @returns {Observable<object>}
    */
-  getRecipe(id: number): Observable<object> {
+  /*getRecipe(id: string): Observable<object> {
     //const params = new HttpParams().set('id', id);
     return this.httpClient
         .get('http://localhost:8080/api/recipe/' + id); //TODO: Angular 6 has this parameters thing messed. Old school style
+  }*/
+  getRecipe(id: string): Promise<object> {
+    console.log(id);
+    return this.httpClient
+        .get('http://localhost:8080/api/recipe/' + id)
+        .toPromise()
   }
 
   /**
@@ -40,9 +51,14 @@ export class RecipeService {
    * @param {Recipe} recipe The recipe object
    * @returns {Observable<object>}
    */
-  public newRecipe(recipe: Recipe): Observable<object> {
+  /*public newRecipe(recipe: Recipe): Observable<object> {
     return this.httpClient
         .post('http://localhost:8080/api/recipe/', recipe);
+  }*/
+  public newRecipe(recipe: Recipe): Promise<object> {
+    return this.httpClient
+        .post('http://localhost:8080/api/recipe/', recipe)
+        .toPromise();
   }
 
   /**
@@ -50,18 +66,28 @@ export class RecipeService {
    * @param {Recipe} recipe The recipe object
    * @returns {Observable<object>}
    */
-  public editRecipe(recipe: Recipe): Observable<object> {
+  /*public editRecipe(recipe: Recipe): Observable<object> {
     return this.httpClient
-        .patch('http://localhost:8080/api/recipe/' + recipe.id, recipe);
+        .patch('http://localhost:8080/api/recipe/' + recipe._id, recipe);
+  }*/
+  public editRecipe(recipe: Recipe): Promise<object> {
+    return this.httpClient
+        .patch('http://localhost:8080/api/recipe/' + recipe._id, recipe)
+        .toPromise();
   }
 
   /**
    * Deletes a recipe.
    * @param {number} index The index of the recipe in the array
    */
-  public deleteRecipe(id: number): Observable<object> {
+  /*public deleteRecipe(id: string): Observable<object> {
     return this.httpClient
         .delete('http://localhost:8080/api/recipe/' + id);
+  }*/
+  public deleteRecipe(id: string): Promise<object> {
+    return this.httpClient
+        .delete('http://localhost:8080/api/recipe/' + id)
+        .toPromise();
   }
 
   /**

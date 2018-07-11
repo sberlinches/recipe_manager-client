@@ -74,7 +74,8 @@ export class RecipeNewComponent implements OnInit {
     if(form.valid) {
       this._recipeService
           .newRecipe(this._recipe)
-          .subscribe(data => {
+          .then(data => { //Promises
+          //.subscribe(data => { //Observables
             // If data is true(1), the recipe was created
             if(data) {
               this.closeModal.emit(); //TODO: close modal is going to call getRecipes(). Needless to say that it could be improved...
